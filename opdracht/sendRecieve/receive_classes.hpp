@@ -3,21 +3,44 @@
 
 #include "hwlib.hpp"
 #include "rtos.hpp"
+#include "msg_decoder.hpp"
 
 class receiver_controller : public rtos::task<> {
    private:
-    rtos::timer receive_timer;
+    rtos::clock pause_detector_clock;
     hwlib::target::pin_in& data;
     hwlib::target::pin_out& gnd;
     hwlib::target::pin_out& vcc;
+    msg_decoder& listener;
 
     void main() {
-        while (1) {
-            receive_timer.set(400 * rtos::us);
-            wait(receive_timer);
-            if (get_start_bit() != -1) {
-                hwlib::cout << get_message() << "\n";
-                hwlib::wait_ms(1000);
+        enum states { idle, signal };
+        states state = states::idle;
+        unsigned int pause_length = 0;
+
+        for (;;) {
+            switch (state) {
+                case states::idle: {
+                    wait(pause_detector_clock);
+                    if (read_object()) {
+                        pause_length += 100;
+                    } else {
+                        listener.pause_detected(pause_length);
+                        //						hwlib::cout
+                        //<< pause_length << "\n";
+                        state = states::signal;
+                    }
+                    break;
+                }
+
+                case states::signal: {
+                    hwlib::cout << "in signal\n";
+                    if (read_object()) {
+                        pause_length = 0;
+                        state = states::idle;
+                    }
+                    break;
+                }
             }
         }
     }
@@ -25,12 +48,14 @@ class receiver_controller : public rtos::task<> {
    public:
     receiver_controller(hwlib::target::pin_in& data,
                         hwlib::target::pin_out& gnd,
-                        hwlib::target::pin_out& vcc)
+                        hwlib::target::pin_out& vcc, 
+                        msg_decoder& listener)
         : task(0, "receiver_controller"),
-          receive_timer(this, "receive_timer"),
+          pause_detector_clock(this, 100 * rtos::us, "pause_detector_clock"),
           data(data),
           gnd(gnd),
-          vcc(vcc) {
+          vcc(vcc),
+          listener(listener) {
         gnd.write(0);
         vcc.write(1);
         gnd.flush();
@@ -40,62 +65,6 @@ class receiver_controller : public rtos::task<> {
     bool read_object() {
         data.refresh();
         return data.read();
-    }
-
-    int get_start_bit() {
-       
-        if (!read_object()) {
-            hwlib::wait_us(1100);
-            
-            if (!read_object()) {
-                hwlib::wait_us(700);
-                return 1;
-            } else {
-                hwlib::wait_us(700);
-                return 0;
-            }
-        }
-        return -1;
-    }
-
-    int get_bit() {
-        int begin = hwlib::now_us();
-        
-        while (read_object()) {
-            hwlib::wait_us(100);
-            if (begin - hwlib::now_us() >= 4000) {
-                return -1;
-            }
-        }
-        hwlib::wait_us(1100);
-        
-        if (!read_object()) {
-            hwlib::wait_us(700);
-            return 1;
-        } else {
-            hwlib::wait_us(700);
-            return 0;
-        }
-        return -1;
-    }
-
-    char16_t get_message() {
-        char16_t bitstream = 0;
-        bitstream = bitstream << 1;
-        for (int i = 0; i < 15; i++) {
-            auto bit = get_bit();
-            if ((bit == 1) || (bit == 0)) {
-                bitstream = (bitstream | bit);
-            } else if (bit == -1) {
-                return -1;
-            }
-            if (i < 14) {
-                bitstream = bitstream << 1;
-            }
-        }
-        bitstream = bitstream | (1 << 15);
-        hwlib::cout << bitstream << '\n';
-        return bitstream;
     }
 };
 
