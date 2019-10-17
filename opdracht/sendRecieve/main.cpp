@@ -3,6 +3,7 @@
 #include "send_classes.hpp"
 #include "receive_classes.hpp"
 #include "msg_decoder.hpp"
+#include "tester.hpp"
 
 
 int main(void) {
@@ -20,6 +21,7 @@ int main(void) {
     auto decoder = msg_decoder();
     auto receiver = receiver_controller(data, gnd, vcc, decoder);
     auto sender = send_controller();
+    auto tester = test(sender);
     
     rtos::run();
     return 0;
