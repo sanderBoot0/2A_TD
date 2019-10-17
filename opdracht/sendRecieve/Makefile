@@ -12,7 +12,7 @@
 SOURCES :=
 
 # header files in this project
-HEADERS := send_classes.hpp receive_classes.hpp msg_decoder.hpp
+HEADERS := send_classes.hpp receive_classes.hpp msg_decoder.hpp Initgame.hpp
 
 # other places to look for files for this project
 SEARCH  := 

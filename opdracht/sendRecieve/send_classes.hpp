@@ -30,7 +30,7 @@ class ir_sender {
     void set_zero() { send_pin.write(0); }
 
     void send_message(char16_t compiled_message) {
-        for (int amount_messages = 0; amount_messages < 2; amount_messages++) {
+            send_one();
             for (int i = 15; i >= 0; i--) {
                 if ((compiled_message & (1 << i)) != 0) {
                     send_one();
@@ -41,7 +41,17 @@ class ir_sender {
             send_pin.write(0);
             send_pin.flush();
             hwlib::wait_ms(3);
-        }
+             for (int i = 15; i >= 0; i--) {
+                if ((compiled_message & (1 << i)) != 0) {
+                    send_one();
+                } else {
+                    send_zero();
+                }
+            }
+            send_pin.write(0);
+            send_pin.flush();
+            hwlib::wait_ms(3);
+        
     }
 };
 
@@ -51,17 +61,17 @@ class send_controller : public rtos::task<> {
     rtos::channel<char16_t, 6> messages_channel;
 
     void main() {
-        // while (1) {
-            // wait(messages_channel);
-            // wait(1000);
-            // send_full_message();
-        // }
+        while (1) {
+            wait(messages_channel);
+            hwlib::wait_ms(1000);
+            send_full_message();
+         }
     }
 
     void send_full_message() {
         auto message = messages_channel.read();
         ir_send.send_message(message);
-        //hwlib::cout << message << '\n';
+        hwlib::cout  << hwlib::bin << message << '\n';
     }
 
    public:
