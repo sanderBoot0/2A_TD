@@ -23,6 +23,7 @@ class ir_sender {
         send_pin.flush();
         hwlib::wait_us(800);
         send_pin.write(0);
+        send_pin.flush();
         hwlib::wait_us(1600);
     }
 
@@ -38,6 +39,7 @@ class ir_sender {
                 }
             }
             send_pin.write(0);
+            send_pin.flush();
             hwlib::wait_ms(3);
         }
     }
@@ -49,21 +51,22 @@ class send_controller : public rtos::task<> {
     rtos::channel<char16_t, 6> messages_channel;
 
     void main() {
-        while (1) {
-            wait(messages_channel);
-            send_full_message();
-        }
+        // while (1) {
+            // wait(messages_channel);
+            // wait(1000);
+            // send_full_message();
+        // }
     }
 
     void send_full_message() {
         auto message = messages_channel.read();
         ir_send.send_message(message);
-        hwlib::cout << message << '\n';
+        //hwlib::cout << message << '\n';
     }
 
    public:
     send_controller()
-        : task(1, "send_task"),
+        : task(2, "send_task"),
           ir_send(),
           messages_channel(this, "messages_channel") {}
 
