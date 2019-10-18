@@ -9,10 +9,10 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES :=
+SOURCES := source/receive_classes.cpp source/msg_decoder.cpp # source/initgame.cpp source/send_classes.cpp
 
 # header files in this project
-HEADERS := send_classes.hpp receive_classes.hpp msg_decoder.hpp Initgame.hpp
+HEADERS := headers/receive_classes.hpp headers/msg_decoder.hpp # headers/initgame.hpp headers/send_classes.hpp 
 
 # other places to look for files for this project
 SEARCH  := 
