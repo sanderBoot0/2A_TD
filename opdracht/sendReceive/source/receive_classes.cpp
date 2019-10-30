@@ -1,5 +1,8 @@
 #include "../headers/receive_classes.hpp"
 
+#include "hwlib.hpp"
+#include "rtos.hpp"
+
 uint64_t receiver_controller::check_pause() {
     uint64_t begin_time;
 

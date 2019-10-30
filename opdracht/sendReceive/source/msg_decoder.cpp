@@ -34,28 +34,34 @@ void msg_decoder::main() {
                         msg = msg & ~(0x1);
                     else
                         state = states::idle;
+                    
+                    hwlib::wait_ms(5);
                 }
 
-                if (check(msg)) {
+                // if (check(msg)) {
                     auto pause = pauses.read();
-                    hwlib::cout << hwlib::bin << msg << '\t' << hwlib::bin << previous_msg << '\t' << pause<< '\n';
+                    // hwlib::cout << hwlib::bin << msg << '\t' << hwlib::bin << previous_msg << '\t' << pause<< '\n';
                     if (pause > 2000 && pause < 4000 &&
                         msg == previous_msg) {
                         previous_msg = 0;
                     } else {
                         previous_msg = msg;
-                        uint8_t player = ((msg & 0b000000000011111) >> 1);
-                        uint8_t weapon = ((msg & 0b000001111100000) >> 6);
+                        // uint8_t player = ((msg & 0b000000000011111) >> 1);
+                        // uint8_t weapon = ((msg & 0b000001111100000) >> 6);
                         
-                        hwlib::cout << "P\t" << player << "\tW\t" << weapon << '\n';
+                        // hwlib::cout << "P\t" << player << "\tW\t" << weapon << '\n';
+
+                        uint8_t bericht = (msg & 0b111111110) >> 1;
+                        // hwlib::cout << hwlib::dec << bericht << '\n';
+                        printer.write(bericht);
                         
                         //ir_msg msg = {player, weapon};
                         //listener.msg_received(msg);
                         state = states::idle;
                     }
-                } else {
-                    state = states::idle;
-                }
+                // } else {
+                //     state = states::idle;
+                // }
 
                 pauses.clear();
 

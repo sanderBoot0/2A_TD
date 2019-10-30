@@ -1,16 +1,17 @@
 #ifndef RECEIVE_CLASSES_HPP
 #define RECEIVE_CLASSES_HPP
 
-#include "hwlib.hpp"
 #include "msg_decoder.hpp"
+
+#include "hwlib.hpp"
 #include "rtos.hpp"
 
 class receiver_controller : public rtos::task<> {
    private:
     rtos::clock pause_detector_clock;
-    hwlib::target::pin_in& data;
-    hwlib::target::pin_out& gnd;
-    hwlib::target::pin_out& vcc;
+    hwlib::pin_in& data;
+    hwlib::pin_out& gnd;
+    hwlib::pin_out& vcc;
     msg_decoder& listener;
 
     void main() override{
@@ -23,8 +24,8 @@ class receiver_controller : public rtos::task<> {
 
    public:
         receiver_controller(
-            hwlib::target::pin_in & data, hwlib::target::pin_out & gnd,
-            hwlib::target::pin_out & vcc, msg_decoder & listener)
+            hwlib::pin_in & data, hwlib::pin_out & gnd,
+            hwlib::pin_out & vcc, msg_decoder & listener)
             : task(1, "receiver_controller"),
               pause_detector_clock(this, 50 * rtos::us, "pause_detector_clock"),
               data(data),

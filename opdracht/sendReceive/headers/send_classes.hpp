@@ -9,9 +9,8 @@ class ir_sender {
     hwlib::target::d2_36kHz send_pin;
 
    public:
-    void send_one();
+    void send_bit(const bool bit);
 
-    void send_zero();
     void set_zero() { send_pin.write(0); }
 
     void send_message(char16_t compiled_message);
@@ -33,7 +32,7 @@ class send_controller : public rtos::task<> {
     void send_full_message() {
         auto message = messages_channel.read();
         ir_send.send_message(message);
-        hwlib::cout  << hwlib::bin << message << '\n';
+        // hwlib::cout  << hwlib::bin << message << '\n';
     }
 
    public:
