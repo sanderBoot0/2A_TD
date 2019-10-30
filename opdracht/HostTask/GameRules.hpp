@@ -1,3 +1,6 @@
+#ifndef GAMERULES_HPP
+#define GAMERULES_HPP
+
 #include "hwlib.hpp"
 
 class GameRules{
@@ -44,3 +47,5 @@ public:
     }
 
 };
+
+#endif
