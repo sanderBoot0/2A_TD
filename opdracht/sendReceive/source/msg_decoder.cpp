@@ -38,7 +38,7 @@ void msg_decoder::main() {
                     hwlib::wait_ms(5);
                 }
 
-                // if (check(msg)) {
+                if (check(msg)) {
                     auto pause = pauses.read();
                     // hwlib::cout << hwlib::bin << msg << '\t' << hwlib::bin << previous_msg << '\t' << pause<< '\n';
                     if (pause > 2000 && pause < 4000 &&
@@ -59,9 +59,10 @@ void msg_decoder::main() {
                         //listener.msg_received(msg);
                         state = states::idle;
                     }
-                // } else {
-                //     state = states::idle;
-                // }
+                } else {
+                    hwlib::cout << ((msg & 0b111111110) >> 1) << '\n';
+                    state = states::idle;
+                }
 
                 pauses.clear();
 
@@ -73,10 +74,10 @@ void msg_decoder::main() {
 }
 
 bool msg_decoder::check(unsigned int m) {
-    uint8_t player =  ((m & 0x3E  ) >> 1);
-    uint8_t weapon =  ((m & 0x7C0 ) >> 6);
+    uint8_t msg =  ((m & 0x3E  ) >> 1);
+
     uint8_t control_bits = ((m & 0xF800) >> 11);
-    uint8_t control2_xor = (player ^ weapon);
+    uint8_t control2_xor = (msg);
     if (control_bits == control2_xor) {
         return 1;
     }
