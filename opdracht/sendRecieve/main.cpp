@@ -1,6 +1,6 @@
 #include "hwlib.hpp"
 #include "rtos.hpp"
-// #include "send_classes.hpp"
+//#include "headers/send_classes.hpp"
 #include "headers/receive_classes.hpp"
 #include "headers/msg_decoder.hpp"
 // #include "initgame.hpp"
@@ -20,7 +20,7 @@ int main(void) {
 
     auto decoder = msg_decoder();
     auto receiver = receiver_controller(data, gnd, vcc, decoder);
-    // auto sender = send_controller();
+    //auto sender = send_controller();
     // auto tester = Initgame(sender);
     
     (void) decoder;
