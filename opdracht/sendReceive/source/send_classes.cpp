@@ -10,28 +10,20 @@ void ir_sender::send_bit(const bool bit) {
 }
 
 void ir_sender::send_message(char16_t compiled_message) {
-        send_bit(1);
+        
+    // send msg 1st time  MSB first
+    for (int i = 15; i >= 0; i--) {
+        send_bit( ( (compiled_message & (1 << i)) != 0) /* ? 1 : 0 */ );
+    }
 
-        for (int i = 15; i >= 0; i--) {
-            // if ((compiled_message & (1 << i)) != 0) {
-            //     send_one();
-            // } else {
-            //     send_zero();
-            // }
-            send_bit( ( (compiled_message & (1 << i)) != 0) ? 1 : 0 );
-        }
-        send_pin.write(0);
-        send_pin.flush();
-        hwlib::wait_ms(3);
-            for (int i = 15; i >= 0; i--) {
-            if ((compiled_message & (1 << i)) != 0) {
-                send_bit(1);
-            } else {
-                send_bit(0);
-            }
-        }
-        send_pin.write(0);
-        send_pin.flush();
-        hwlib::wait_ms(3);
-    
+    // write 3ms Pause
+    send_pin.write(0);  send_pin.flush();
+    hwlib::wait_ms(3);
+
+    // Send message 2nd time  MSB first
+    for (int i = 15; i >= 0; i--) {
+        send_bit( ( (compiled_message & (1 << i)) != 0) /* ? 1 : 0 */ );
+    }
+
+    send_pin.write(0);  send_pin.flush();    
 }

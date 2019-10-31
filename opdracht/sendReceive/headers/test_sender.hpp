@@ -11,18 +11,29 @@ private:
 
     void main(){
         for(;;) {
-            for(uint8_t i = 0; i < 100; i++) {
+            for(uint8_t i = 0; i < 32; i++) {
+
                 hwlib::cout << hwlib::dec << i << '\n';
-                uint16_t data = 0;
-                data += i << 1;
-                uint8_t controlbits = i;
-                data += (controlbits << 11);
-                sender.write(data);
-                // sender.write(i);
-                hwlib::wait_ms(1000);
+                shoot(i,0);
+
+                hwlib::wait_ms(1500);
             }
         }
     }
+
+    
+    void shoot(uint8_t playername, uint8_t weapontype) {
+        uint16_t data = (1 << 15);
+        playername &= ~(0b11100000);
+        weapontype &= ~(0b11100000);
+        data += (playername << 10);
+        data += (weapontype << 5);
+        uint8_t controlbits = (playername ^ weapontype);
+        data |= controlbits;
+        hwlib::cout << hwlib::bin << data << '\n';
+        sender.write(data);
+}
+
     
 public:
     test_sender(send_controller &sender):

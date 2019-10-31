@@ -15,7 +15,7 @@ void test_receiver::main() {
 
         n_metingen++;
         if(msg < prev_msg) {
-            prev_msg -= 100;
+            prev_msg -= 32;
         }
         n_faals += ((msg - prev_msg) -1);
 
