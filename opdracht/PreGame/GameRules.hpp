@@ -14,35 +14,35 @@ protected:
 
 public:
 
-    uint8_t GetPlayerNumber(){
+    uint8_t getPlayerNumber(){
         return playernumber;
     }
 
-    int GetFirepower(){
+    int getFirepower(){
          return firepower;
     }
 
-    bool GetStartSignal(){
+    bool getStartSignal(){
         return startsignal;
     }
 
-    int GetGameTime(){
+    int getGameTime(){
         return gametime;
     }
 
-    void SetPlayerNumber(uint8_t p){
+    void setPlayerNumber(uint8_t p){
         playernumber = p;
     }
 
-    void SetFirePower(int f){
+    void setFirePower(int f){
         firepower = f;
     }
 
-    void SetStartSignal(){
+    void setStartSignal(){
         startsignal = !startsignal;
     }
     
-    void SetGameTime(int g){
+    void setGameTime(int g){
         gametime = g;
     }
 

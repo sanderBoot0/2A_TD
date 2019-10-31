@@ -11,7 +11,7 @@
 # source files in this project (main.cpp is automatically assumed)
 SOURCES := 
 # header files in this project
-HEADERS := GameRules.hpp RegGame.hpp
+HEADERS := GameRules.hpp RegGame.hpp Keypad.hpp customkeypad.hpp
 
 # other places to look for files for this project
 SEARCH  := 
