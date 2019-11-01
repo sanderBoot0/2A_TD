@@ -19,7 +19,7 @@ class ir_sender {
 class send_controller : public rtos::task<> {
    private:
     ir_sender ir_send;
-    rtos::channel<char16_t, 6> messages_channel;
+    rtos::channel<char16_t, 10> messages_channel;
 
     void main() {
         while (1) {

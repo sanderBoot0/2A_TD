@@ -3,7 +3,7 @@
 #include "hwlib.hpp"
 #include "rtos.hpp"
 
-void test_receiver::main() {
+void Test_receiver::main() {
     wait(messages);
     prev_msg = messages.read();
 

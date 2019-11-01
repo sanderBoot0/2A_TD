@@ -2,25 +2,28 @@
 #define KEYPAD_HPP
 
 #include "hwlib.hpp"
-#include "RegGame.hpp"
+#include "reg_game.hpp"
+#include "rtos.hpp"
 
-class keypadclass: public rtos::task<>{
+class Keypadclass: public rtos::task<>{
 public:
+    rtos::clock period_clock;
     hwlib::istream &keypadmatrix;
-    regGame &gamePar;
+    RegGame &gamePar;
 
     void main(){
         for(;;){
+            wait(period_clock);
             if(keypadmatrix.char_available()){
                 auto keypadinput = keypadmatrix.getc();
                 gamePar.write(keypadinput);
             }
-            hwlib::wait_ms(60);
         }
     }
 
-    keypadclass(hwlib::istream &keypadconstructor, regGame &gamePar):
-        task(2, "keypad"),
+    Keypadclass(hwlib::istream &keypadconstructor, RegGame &gamePar):
+        task(3, "keypad"),
+        period_clock(this, 100 * rtos::ms, "Keypadclass periodieke klok"),
         keypadmatrix(keypadconstructor),
         gamePar( gamePar )
     {};

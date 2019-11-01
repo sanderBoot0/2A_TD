@@ -10,8 +10,9 @@
 
 # settings for Arduino Due projects
 TARGET            := arduino_due
+<<<<<<<<< Temporary merge branch 1
 SERIAL_PORT       ?= COM2
-# SERIAL_PORT 
+# SERIAL_PORT     ?= /dev/ttyACM0
 STACK_SIZE        ?= 81920
 CONSOLE_BAUDRATE  := 2400
 HEAP              ?= BMPTK
