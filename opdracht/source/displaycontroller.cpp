@@ -17,3 +17,13 @@ void displayController::showTime(time &t) {
     display << seconds << hwlib::flush;
 
 }
+
+void displayController::showCommand(const char *p) {
+    display << '\f';
+
+    while(*p++) {
+        display << *p;
+    }
+
+    display << hwlib::flush;
+}
