@@ -4,24 +4,36 @@
 #include "hwlib.hpp"
 #include "rtos.hpp"
 
-class InitGame : public rtos::task<>{
-protected:
+class InitGame : public rtos::task<> {
+   private:
+    rtos::channel<char, 16> keypadchannel;
 
-void main(){
-    enum state_t = {Idle, RegTime, SetStartSignal};
-    state = Idle;
-    switch(state){
-        case Idle:
+    void main() {
+        enum state_t = {Idle, RegTime, SetStartSignal};
+        state = Idle;
+        for (;;) {
+            switch (state) {
+                case Idle:
+                    wait(keypadchannel);
+                    if (keypadchannel.read() == 'C') {
+                        state = RegTime;
+                    }
+                    break;
 
-        case RegTime:
+                case RegTime:
+                    wait(keypadchannel);
 
-        case SetStartSignal:
-        
+                    break;
+
+                case SetStartSignal:
+
+                    break;
+            }
+        }
     }
-}
 
-public:
+   public:
+    void write(const char k) { keypadchannel.write(k); }
+};
 
-}
-
-#endif // INITGAME_HPP
+#endif  // INITGAME_HPP

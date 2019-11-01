@@ -6,7 +6,6 @@
 
 class keypadclass: public rtos::task<>{
 public:
-    // rtos::channel<char, 16 > keypadchannel;
     hwlib::istream &keypadmatrix;
     regGame &gamePar;
 
@@ -22,14 +21,9 @@ public:
 
     keypadclass(hwlib::istream &keypadconstructor, regGame &gamePar):
         task(2, "keypad"),
-        // keypadchannel(this, "keypadchannel"),
         keypadmatrix(keypadconstructor),
         gamePar( gamePar )
     {};
-
-    // char read(){return keypadchannel.read();};
-
-    // void write(auto value) { keypadchannel.write(value); }
 
 };
 
