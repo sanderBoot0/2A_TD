@@ -20,6 +20,8 @@ class displayController: public rtos::task<>
     {}
 
     void showTime(time &t);
+
+    void showCommand(const char *p);
     
 };
 
