@@ -24,5 +24,4 @@ public:
 
 }
 
-
-#endif
+#endif // INITGAME_HPP
