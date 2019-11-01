@@ -6,7 +6,7 @@
 class GameRules{
 
 protected:
-    uint8_t playernumber;
+    int playernumber;
     int cooldown = firepower / 3 * 1000;
     int firepower;
     bool startsignal = false;
@@ -14,7 +14,7 @@ protected:
 
 public:
 
-    uint8_t getPlayerNumber(){
+    int getPlayerNumber(){
         return playernumber;
     }
 
@@ -30,7 +30,7 @@ public:
         return gametime;
     }
 
-    void setPlayerNumber(uint8_t p){
+    void setPlayerNumber(int p){
         playernumber = p;
     }
 

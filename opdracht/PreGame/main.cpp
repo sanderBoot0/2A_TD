@@ -1,7 +1,8 @@
 #include "GameRules.hpp"
 #include "RegGame.hpp"
 #include "rtos.hpp"
-#include "Keypad.hpp"
+
+#include "keypadclass.hpp"
 
 int main(){
         
@@ -20,19 +21,32 @@ int main(){
     auto in_port  = hwlib::port_in_from( in0,  in1,  in2,  in3  );
     auto matrix = hwlib::matrix_of_switches( out_port, in_port );
     auto message = "123A456B789C*0#D";
-    auto bord = hwlib::keypad<16>(matrix, message);
 
-    regGame game(bord);
+    auto keypadaanmaak = hwlib::keypad<16>(matrix, message);
+
+    regGame regGame1;
+
+    keypadclass keypad(keypadaanmaak, regGame1);
+
+
+    (void) regGame1;
+    (void) keypad;
+
+
+
+
+
 
    // kill the watchdog
-    WDT->WDT_MR = WDT_MR_WDDIS;
+    // WDT->WDT_MR = WDT_MR_WDDIS;
    
    // wait for the PC console to start
     hwlib::wait_ms( 500 );
 
-    // regGame(keypad)
-    for(;;){
-        hwlib::cout << game.keyinput.getc();
-        hwlib::wait_ms(100);
-    }
+    // regGame(keypad);
+
+
+    //keypadclass test(keypadaanmaak);
+    rtos::run();
+    
 }
