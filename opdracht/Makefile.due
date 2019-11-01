@@ -23,4 +23,3 @@ include           $(RTOS)/makefile.inc
 # defer to the Makefile.shared
 include           $(RELATIVE)/Makefile.link
 
-
