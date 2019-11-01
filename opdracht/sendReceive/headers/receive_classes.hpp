@@ -1,43 +1,43 @@
 #ifndef RECEIVE_CLASSES_HPP
 #define RECEIVE_CLASSES_HPP
 
+#include "test_receiver.hpp"
+
 #include "hwlib.hpp"
-#include "msg_decoder.hpp"
 #include "rtos.hpp"
 
 class receiver_controller : public rtos::task<> {
    private:
     rtos::clock pause_detector_clock;
-    hwlib::target::pin_in& data;
-    hwlib::target::pin_out& gnd;
-    hwlib::target::pin_out& vcc;
-    msg_decoder& listener;
+    hwlib::pin_in& data;
+    hwlib::pin_out& gnd;
+    hwlib::pin_out& vcc;
 
-    void main() override{
-        for (;;) {
-            wait(pause_detector_clock);
-                
-            listener.pause_detected( check_pause() );
-        }
-    } 
+    test_receiver &printer;
+
+    int get_bit();
+    bool check_equal(bool message1[16], bool message2[16]);
+    bool check(uint16_t m);
+
+    void main();
 
    public:
         receiver_controller(
-            hwlib::target::pin_in & data, hwlib::target::pin_out & gnd,
-            hwlib::target::pin_out & vcc, msg_decoder & listener)
+            hwlib::pin_in & data, hwlib::pin_out & gnd,
+            hwlib::pin_out & vcc, test_receiver &printer)
             : task(1, "receiver_controller"),
               pause_detector_clock(this, 50 * rtos::us, "pause_detector_clock"),
               data(data),
               gnd(gnd),
               vcc(vcc),
-              listener(listener) {
+              printer(printer) {
             gnd.write(0);
             vcc.write(1);
             gnd.flush();
             vcc.flush();
         }
 
-        uint64_t check_pause();
+        //uint64_t check_pause();
     };
 
 #endif

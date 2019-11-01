@@ -9,14 +9,14 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES := source/receive_classes.cpp source/msg_decoder.cpp # source/initgame.cpp source/send_classes.cpp
+SOURCES := ../../sendReceive/source/send_classes.cpp
 
 # header files in this project
-HEADERS := headers/receive_classes.hpp headers/msg_decoder.hpp # headers/initgame.hpp headers/send_classes.hpp 
+HEADERS :=  ../../sendReceive/headers/send_classes.hpp ../../sendReceive/headers/test_sender.hpp
 
 # other places to look for files for this project
-SEARCH  := 
+SEARCH  :=
 
 # set RELATIVE to the next higher directory and defer to the Makefile.due
-RELATIVE := $(RELATIVE)../
+RELATIVE := $(RELATIVE)../../
 include $(RELATIVE)Makefile.due

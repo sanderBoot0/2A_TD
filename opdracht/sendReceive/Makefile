@@ -9,15 +9,14 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES :=
+SOURCES := source/displayController.cpp 
 
 # header files in this project
-HEADERS := pause_detector.hpp pause_listener.hpp msg_decoder.hpp msg_listener.hpp msg_logger.hpp
+HEADERS := headers/displayController.hpp headers/time_entity.hpp
 
 # other places to look for files for this project
-SEARCH  :=
+SEARCH  := 
 
-# set REATIVE to the next higher directory 
-# and defer to the Makefile.due there
+# set RELATIVE to the next higher directory and defer to the Makefile.due
 RELATIVE := $(RELATIVE)../
 include $(RELATIVE)Makefile.due
