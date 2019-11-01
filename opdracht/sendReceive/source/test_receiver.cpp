@@ -27,7 +27,7 @@ void test_receiver::main() {
 
         w << hwlib::flush;
 
-        hwlib::cout << msg << '\t' << prev_msg << '\t' << n_metingen << '\t' << n_faals << '\t' << (int)percentage << '\n';
+        // hwlib::cout << msg << '\t' << prev_msg << '\t' << n_metingen << '\t' << n_faals << '\t' << (int)percentage << '\n';
 
         // w << percentage << '%' << hwlib::flush;
         prev_msg = (int8_t)msg;
