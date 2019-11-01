@@ -14,6 +14,7 @@ AUTHORS:
 
 #include "../headers/gamerules.hpp"
 #include "../headers/reg_game.hpp"
+#include "../headers/initgame.hpp"
 #include "../headers/keypadclass.hpp"
 
 #include "../headers/time_entity.hpp"
@@ -37,14 +38,14 @@ int main(){
 //     auto gnd  = target::pin_out(target::pins::d10);
 //     auto vcc  = target::pin_out(target::pins::d9);
 
-// // Display I2C pins
-//     auto scl = target::pin_oc( target::pins::scl );
-//     auto sda = target::pin_oc( target::pins::sda );
-//     auto i2c_bus = hwlib::i2c_bus_bit_banged_scl_sda( scl,sda );
+// Display I2C pins
+    auto scl = target::pin_oc( target::pins::scl );
+    auto sda = target::pin_oc( target::pins::sda );
+    auto i2c_bus = hwlib::i2c_bus_bit_banged_scl_sda( scl,sda );
 
-// // Declaration of Display and font for displayController class
-//     auto oled = hwlib::glcd_oled( i2c_bus, 0x3c ); 
-//     auto font = hwlib::font_default_16x16();
+// Declaration of Display and font for displayController class
+    auto oled = hwlib::glcd_oled( i2c_bus, 0x3c ); 
+    auto font = hwlib::font_default_16x16();
 
 // reciever tester main ================================================
 
@@ -71,10 +72,12 @@ int main(){
     auto keypad = Keypadclass(keypadaanmaak, regGame1);
 
     // auto receiver = receiver_controller(data, gnd, vcc, printer);
-    // auto sender = send_controller();
+    auto sender = send_controller();
 
     // auto tijd = time(11, 11);
-    // auto displayCtrl = displayController(oled, font);
+    auto displayCtrl = displayController(oled, font);
+
+    auto initGameCtrl = Initgame(sender, displayCtrl);
 
 
     (void) regGame1;

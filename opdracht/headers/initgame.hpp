@@ -4,35 +4,25 @@
 #include "hwlib.hpp"
 #include "rtos.hpp"
 
+#include "send_classes.hpp"
+#include "displaycontroller.hpp"
+
 class Initgame : public rtos::task<> {
    private:
     rtos::channel<char, 16> keypadchannel;
+    send_controller &send_channel;
+    Displaycontroller &display;
 
-    void main() {
-        enum state_t = {Idle, RegTime, SetStartSignal};
-        state = Idle;
-        for (;;) {
-            switch (state) {
-                case Idle:
-                    wait(keypadchannel);
-                    if (keypadchannel.read() == 'C') {
-                        state = RegTime;
-                    }
-                    break;
-
-                case RegTime:
-                    wait(keypadchannel);
-
-                    break;
-
-                case SetStartSignal:
-
-                    break;
-            }
-        }
-    }
+    void main();
 
    public:
+    Initgame(send_controller &send_channel, DisplayController &display):
+        task(4, "Initgame Task"),
+        keypadchannel(this, "Initgame keypad channel"),
+        send_channel( send_channel ),
+        display( display )
+    {}
+
     void write(const char k) { keypadchannel.write(k); }
 };
 

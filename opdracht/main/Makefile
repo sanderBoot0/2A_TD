@@ -14,12 +14,14 @@
 SOURCES := ../source/displaydontroller.cpp
 SOURCES := ../source/receive_classes.cpp
 SOURCES := ../source/send_classes.cpp
+SOURCES := ../source/initgame.cpp
 
 # header files in this project
 # HEADERS := GameRules.hpp RegGame.hpp keypadclass.hpp 
 
 HEADERS := ../headers/gamerules.hpp
 HEADERS := ../headers/reg_game.hpp
+HEADERS := ../headers/initgame.hpp
 HEADERS := ../headers/keypadclass.hpp
 
 HEADERS := ../headers/time_entity.hpp

@@ -1,6 +1,6 @@
 #include "../headers/displaydontroller.hpp"
 
-void displayController::showTime(time &t) {
+void DisplayController::showTime(time &t) {
     display << '\f';
 
     unsigned int minutes = t.getMinutes();
@@ -18,7 +18,8 @@ void displayController::showTime(time &t) {
 
 }
 
-void displayController::showCommand(const char *p) {
+
+void DisplayController::showCommand(const char *p) {
     display << '\f';
 
     while(*p++) {
