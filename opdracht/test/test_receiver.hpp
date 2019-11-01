@@ -4,7 +4,7 @@
 #include "hwlib.hpp"
 #include "rtos.hpp"
 
-class test_receiver : public rtos::task<> {
+class Test_receiver : public rtos::task<> {
    private:
     rtos::channel<uint8_t, 10> messages;
     hwlib::terminal_from &w;
@@ -18,7 +18,7 @@ class test_receiver : public rtos::task<> {
 
    public: 
 
-    test_receiver(hwlib::terminal_from &w):
+    Test_receiver(hwlib::terminal_from &w):
         task( 4, "test_receiver" ),
         messages( this, "messages" ),
         w( w ) 

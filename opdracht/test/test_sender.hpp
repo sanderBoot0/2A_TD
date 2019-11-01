@@ -5,9 +5,9 @@
 #include "rtos.hpp"
 #include "send_classes.hpp"
 
-class test_sender : public rtos::task<>{
+class Test_sender : public rtos::task<>{
 private:
-    send_controller &sender;
+    Send_controller &sender;
 
     void main(){
         for(;;) {
@@ -32,11 +32,11 @@ private:
         data |= controlbits;
         hwlib::cout << hwlib::bin << data << '\n';
         sender.write(data);
-}
+    }
 
     
 public:
-    test_sender(send_controller &sender):
+    Test_sender(send_controller &sender):
         task(3, "send_task"),
         sender(sender)
     {}

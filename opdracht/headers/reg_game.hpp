@@ -1,18 +1,17 @@
 #ifndef REGGAME_HPP
 #define REGGAME_HPP
 
-#include "GameRules.hpp"
+#include "gamerules.hpp"
+#include "hwlib.hpp"
 #include "rtos.hpp"
-// #include "keypadclass.hpp"
 
 bool isNumber(char c) { return bool((c >= '0') && (c <= '9')); }
 
-class regGame : public rtos::task<> {
+class RegGame : public rtos::task<> {
    private:
     rtos::channel<char, 16> keypadchannel;
 
     GameRules g;
-    // keypadclass keypadinstance;
 
     void main() {
         enum regGameStates { Idle, RegPlayer, RegFP, WaitGameTime, WaitRun };
@@ -52,6 +51,7 @@ class regGame : public rtos::task<> {
                             if (isNumber(temp)) {
                                 regplayerstate = substates::registernumber;
                                 hwlib::cout << "your player number is: " << temp << '\n';
+                                hwlib::cout << "Saving player number" << '\n';
                             } else {
                                 // Vraag nieuw nummer
                                 hwlib::cout << "not a number" << '\n';
@@ -59,7 +59,6 @@ class regGame : public rtos::task<> {
                             break;
                         }
                         case substates::registernumber: {
-                            hwlib::cout << "Saving player number" << '\n';
                             g.setPlayerNumber(temp - 48);
                             state = regGameStates::RegFP;
                             hwlib::cout << "Type B to continue" << '\n';
@@ -88,15 +87,11 @@ class regGame : public rtos::task<> {
                                 hwlib::cout << "your fire power is: " << temp << '\n';
                             } else {
                                 hwlib::cout << "wrong number" << '\n';
-                                // Vraag nieuw nummer
                             }
                             break;
                         }
                         case substates::registernumber: {
                             g.setFirePower((temp - 48));
-
-                            hwlib::cout << "your fire power is: " << temp - 48 << '\n';
-
                             state = regGameStates::WaitGameTime;
                             break;
                         }
@@ -126,8 +121,8 @@ class regGame : public rtos::task<> {
     }
 
    public:
-    regGame()
-        : task(1, "RegGame"),
+    RegGame()
+        : task(4, "RegGame"),
           keypadchannel(this, "keypadchannel")
     {}
 

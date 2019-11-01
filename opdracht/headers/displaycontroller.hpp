@@ -6,7 +6,7 @@
 
 #include "time_entity.hpp"
 
-class displayController: public rtos::task<>
+class DisplayController: public rtos::task<>
 {
    private:
     
@@ -14,7 +14,7 @@ class displayController: public rtos::task<>
     
    public:
     
-    displayController(hwlib::glcd_oled &oled, hwlib::font_default_16x16 &font):
+    DisplayController(hwlib::glcd_oled &oled, hwlib::font_default_16x16 &font):
         task(4, "Display Control Taak"),
         display( oled, font ) 
     {}

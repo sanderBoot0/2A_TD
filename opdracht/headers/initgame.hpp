@@ -4,7 +4,7 @@
 #include "hwlib.hpp"
 #include "rtos.hpp"
 
-class InitGame : public rtos::task<> {
+class Initgame : public rtos::task<> {
    private:
     rtos::channel<char, 16> keypadchannel;
 
