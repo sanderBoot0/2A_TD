@@ -3,7 +3,7 @@
 #include "hwlib.hpp"
 #include "rtos.hpp"
 
-void receiver_controller::main(){
+void Receiver_controller::main(){
     bool message1[16];
     bool message2[16];
 
@@ -67,7 +67,10 @@ void receiver_controller::main(){
                 }
                 if(check(message)) {
                     // hwlib::cout << ' '<< hwlib::bin << message << '\r';
-                    printer.write(message);
+                    // printer.write(message);
+                    for(int i = 0; i < n_listeners; i++) {
+                        listeners[i]->write(message);
+                    }
                     
                 } else {
                     // hwlib::cout << '\n' << ' ' << message << '\n';
@@ -79,7 +82,7 @@ void receiver_controller::main(){
     }
 } 
 
-bool receiver_controller::check_equal(bool message1[16], bool message2[16]) {
+bool Receiver_controller::check_equal(bool message1[16], bool message2[16]) {
     for(int i = 0; i < 16; i++) {
         if(message1[i] != message2[i]) {
             return false;
@@ -88,7 +91,7 @@ bool receiver_controller::check_equal(bool message1[16], bool message2[16]) {
     return true;
 }
 
-bool receiver_controller::check(uint16_t m) {
+bool Receiver_controller::check(uint16_t m) {
     // use a mask to get the data from the msg
     uint8_t playerData =   (m & 0b0111110000000000) >> 10;
     uint8_t weaponType =   (m & 0b0000001111100000) >> 5 ;
@@ -101,7 +104,7 @@ bool receiver_controller::check(uint16_t m) {
     return 0;
 }
 
-int receiver_controller::get_bit() {
+int Receiver_controller::get_bit() {
     bool signal_2nd_check = 0;
     bool signal_3rd_check = 0;
    

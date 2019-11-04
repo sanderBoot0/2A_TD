@@ -11,7 +11,7 @@ class RegGame : public rtos::task<> {
    private:
     rtos::channel<char, 16> keypadchannel;
 
-    GameRules g;
+    GameRules &g;
 
     void main() {
         enum regGameStates { Idle, RegPlayer, RegFP, WaitGameTime, WaitRun };
@@ -21,7 +21,7 @@ class RegGame : public rtos::task<> {
 
         char temp;
 
-        regGameStates state = regGameStates::RegPlayer;
+        regGameStates state = regGameStates::Idle;
 
         hwlib::cout << "Type A to Continue, " << '\n';
         for (;;) {
@@ -29,18 +29,22 @@ class RegGame : public rtos::task<> {
             switch (state) {
                 case Idle: {
                     hwlib::cout << "Idle state" << hwlib::endl;
+                    wait(keypadchannel);
+                    if(keypadchannel.read() == 'A'){
+                        state = regGameStates::RegPlayer;
+                    }
+                    else if(keypadchannel.read() == 'C'){
+
+                    }
                     break;
                 }
                 case RegPlayer: {
                     switch (regplayerstate) {
                         case substates::waitforletter: {
                             wait(keypadchannel);
-
-                            if (keypadchannel.read() == 'A') {
-                                hwlib::cout << "A pressed, " << '\n'
-                                            << "Type Number" << '\n';
-                                regplayerstate = substates::waitfornumber;
-                            }
+                            hwlib::cout << "A pressed, " << '\n'
+                                        << "Type Number" << '\n';
+                            regplayerstate = substates::waitfornumber;
                             break;
                         }
                         case substates::waitfornumber: {
@@ -100,7 +104,6 @@ class RegGame : public rtos::task<> {
                     break;
                 }
                 case regGameStates::WaitGameTime: {
-                    hwlib::cout << "WaitGameTime state" << hwlib::endl;
                     hwlib::wait_ms(1000);
                     // Wait for IR input
                     // If(IR Input == time)
@@ -121,9 +124,10 @@ class RegGame : public rtos::task<> {
     }
 
    public:
-    RegGame()
-        : task(4, "RegGame"),
-          keypadchannel(this, "keypadchannel")
+    RegGame(GameRules &g): 
+        : task(7, "RegGame"),
+        keypadchannel(this, "keypadchannel"),
+        g(g)
     {}
 
     void write(const char k) { keypadchannel.write(k); }
