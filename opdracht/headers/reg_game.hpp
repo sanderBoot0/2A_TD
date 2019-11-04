@@ -100,7 +100,6 @@ class RegGame : public rtos::task<> {
                     break;
                 }
                 case regGameStates::WaitGameTime: {
-                    hwlib::cout << "WaitGameTime state" << hwlib::endl;
                     hwlib::wait_ms(1000);
                     // Wait for IR input
                     // If(IR Input == time)

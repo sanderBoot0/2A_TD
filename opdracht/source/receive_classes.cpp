@@ -68,6 +68,9 @@ void Receiver_controller::main(){
                 if(check(message)) {
                     // hwlib::cout << ' '<< hwlib::bin << message << '\r';
                     // printer.write(message);
+                    for(int i = 0; i < n_listeners; i++) {
+                        listeners[i]->write(message);
+                    }
                     
                 } else {
                     // hwlib::cout << '\n' << ' ' << message << '\n';

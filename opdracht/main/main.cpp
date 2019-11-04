@@ -28,9 +28,13 @@ AUTHORS:
 
 #include "../headers/button.hpp"
 
+#include "../headers/note_player_gpio.hpp"
+#include "../headers/rtttl_player.hpp"
+
+#include "../headers/beeperCtrl.hpp"
+
 #include "hwlib.hpp"
 #include "rtos.hpp"
-
 
 int main(){
         
@@ -74,6 +78,11 @@ int main(){
     auto message = "123A456B789C*0#D";
     auto keypadaanmaak = hwlib::keypad<16>(matrix, message);
 
+    auto beeper_pin = target::pin_out( target::pins::d7 );
+    auto p = note_player_gpio( beeper_pin );
+
+    auto beeper = Beeper(beeper_pin, p);
+
     auto game_par = GameRules();
 
     auto regGame1 = RegGame(game_par);
@@ -87,9 +96,10 @@ int main(){
     // auto tijd = time(11, 11);
     // auto displayCtrl = displayController(oled, font);
 
-    auto runCtrl = Rungame(sender, game_par);
+    auto runCtrl = Rungame(sender, game_par, beeper);
 
     buttonCtrl.addListener(&runCtrl);
+    receiver.addListener(&runCtrl);
 
 
     (void) keypad;
@@ -103,6 +113,8 @@ int main(){
     (void) runCtrl;
 
     (void) buttonCtrl;
+
+    (void) beeper;
     
     // wait for the PC console to start
     hwlib::wait_ms( 500 );

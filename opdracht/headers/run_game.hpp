@@ -10,9 +10,14 @@
 #include "buttonlistener.hpp"
 
 #include "send_classes.hpp"
+#include "msglistener.hpp"
 
-class Rungame : public rtos::task<>, public Buttonlistener {
+#include "beeperCtrl.hpp"
+
+class Rungame : public rtos::task<>, public MsgListener, public Buttonlistener {
    private:
+    rtos::channel<uint16_t, 10> messages;
+
     rtos::clock second_clock;
     rtos::timer shoot_timer;
     rtos::flag button_pressed_flag;
@@ -21,21 +26,29 @@ class Rungame : public rtos::task<>, public Buttonlistener {
 
     GameRules &game_par;
 
+    Beeper &beeper;
+
     bool shoot_available = true;
 
     void main();
 
     void shoot(uint8_t playername, uint8_t weapontype);
 
+    void write(uint16_t msg) override {
+        messages.write(msg);
+    }
+
    public:
 
-    Rungame(send_controller &send_channel, GameRules &game_par):
+    Rungame(send_controller &send_channel, GameRules &game_par, Beeper &p_beeper):
         task(3, "Rungame Control"), 
+        messages(this, "Message channel"),
         second_clock(this, 1000 * rtos::ms, "seconds period clock"),
         shoot_timer(this, "shoot delay timer"),
         button_pressed_flag(this, "shoot button pressed flag"),
         sender(send_channel),
-        game_par(game_par)
+        game_par(game_par),
+        beeper( p_beeper )
     {}
 
     void buttonPressed() override {

@@ -2,13 +2,27 @@
 
 void Rungame::main() {
 
-    enum states {IDLE, CHANGE_GAME_TIME, SHOOTING, SHOOTING_AVAILABLE};
+    enum states {IDLE, CHANGE_GAME_TIME, MSG_RECV, SHOOTING, SHOOTING_AVAILABLE};
     states state = states::IDLE;
 
-    
+    // while(!game_par.getStartSignal()) {
+    //     hwlib::wait_ms(1000);
+    // }
+
+    hwlib::cout << 3 << '\n';
+    beeper.countdown();
+    hwlib::wait_ms(1000);
+    hwlib::cout << 2 << '\n';
+    beeper.countdown();
+    hwlib::wait_ms(1000);
+    hwlib::cout << 1 << '\n';
+    beeper.countdown();
+    hwlib::wait_ms(1000);
+    hwlib::cout << "Go\n";
+    beeper.start();
 
     for(;;) {
-        auto wait_event = wait(button_pressed_flag + second_clock + shoot_timer);
+        auto wait_event = wait(button_pressed_flag + second_clock + shoot_timer + messages);
 
         if(wait_event == second_clock) {
             state = states::CHANGE_GAME_TIME;
@@ -16,19 +30,23 @@ void Rungame::main() {
             state = states::SHOOTING_AVAILABLE;
         } else if(wait_event == button_pressed_flag) {
             state = states::SHOOTING;
+        } else if(wait_event == messages){
+            state = states::MSG_RECV;
         } else {
             hwlib::cout << "d\n";
         }
         
-
-        // hwlib::cout << wait_event << '\n';
-
         switch(state) {
             case states::IDLE: {
                 break;
             }
             case states::CHANGE_GAME_TIME: {
+                // auto seconds = game_par.getGameTime();
                 hwlib::cout << "tijd\n";
+                break;
+            }
+            case states::MSG_RECV: {
+                hwlib::cout << "massage\n";
                 break;
             }
             case states::SHOOTING_AVAILABLE: {
@@ -61,6 +79,5 @@ void Rungame::shoot(uint8_t playername, uint8_t weapontype) {
     data += (weapontype << 5);
     uint8_t controlbits = (playername ^ weapontype);
     data |= controlbits;
-    hwlib::cout << hwlib::bin << data << '\n';
     sender.write(data);
 }
