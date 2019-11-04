@@ -9,11 +9,12 @@ void Initgame::main() {
     for (;;) {
         switch (state) {
             case Idle: {
+                display.writeGameInfoPool(260,69);
                 wait(keypadchannel);
                 if (keypadchannel.read() == 'C') {
-                    display.addChar('C');
-                    display.flushScreen();
-
+                    display.clearScreen();
+                    display.writeCmdPool("CMD\nC");
+                
                     time = 0;
                     state = RegTime;
                 }
@@ -37,8 +38,7 @@ void Initgame::main() {
                         state = SendTime;
                     } else {
                         display.clearScreen();
-                        display.addChar('C');
-                        display.flushScreen();
+                        display.writeCmdPool("CMD\nC");
                         time = 0;
                     }
                 }
@@ -63,7 +63,8 @@ void Initgame::main() {
                 break;
             }
             case SetStartSignal: {
-                display.showCommand("Press *\nTo send\nStart\ncmd");
+                //display.showCommand("Press *\nTo send\nStart\ncmd");
+                display.writeCmdPool("Press *\nTo send\nStart\ncmd");
                 msg = 0 | (1 << 15);
                 send_channel.write(msg);
 

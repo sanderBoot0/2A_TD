@@ -126,7 +126,7 @@ class RegGame : public rtos::task<> {
 
    public:
     RegGame()
-        : task(4, "RegGame"),
+        : task(7, "RegGame"),
           keypadchannel(this, "keypadchannel")
     {}
 

@@ -6,47 +6,62 @@
 
 #include "time_entity.hpp"
 
-class DisplayController{// : public rtos::task<>{
-   private:
-    
-    // rtos::pool<char*> commandpool;
-    // rtos::flag commandflag;
+struct gameinfo {
+   public:
+    // time & score
+    int score;
+    int seconds;
 
-    // rtos::pool<> gameinfopool;
-    // rtos::flag gameinfoflag;
+    gameinfo(int score = 100, int seconds = 0)
+        : score(score), seconds(seconds){};
+};
+
+class DisplayController : public rtos::task<> {
+   private:
+    rtos::pool<const char *> commandpool;
+    rtos::flag commandflag;
+
+    rtos::pool<gameinfo> gameinfopool;
+    rtos::flag gameinfoflag;
 
     hwlib::terminal_from display;
 
+    void main() {
+        for (;;) {
+            auto event = wait(gameinfoflag + commandflag);
+            if (event == commandflag) {
+                showCommand(commandpool.read());
+            }
+            if (event == gameinfoflag) {
+                showGameInfo();
+            }
+        }
+    }
 
-    // void main(){
-        
-
-    // }
-    
    public:
-    
-    DisplayController(hwlib::glcd_oled &oled, hwlib::font_default_16x16 &font):
-        // task(7,"DisplayController"),
-        // flag(this,"commandflag"),
-        // commandpool("commandpool"),
-        display( oled, font ) 
-    {
+    DisplayController(hwlib::glcd_oled &oled, hwlib::font_default_16x16 &font)
+        : task(9, "DisplayController"),
+          commandpool("commandpool"),
+          commandflag(this, "commandflag"),
+          gameinfopool("gameinfopool"),
+          gameinfoflag(this, "gameinfoflag"),
+          display(oled, font) {
         display << '\f' << hwlib::flush;
     }
 
-    void showTime(time &t);
+    void showGameInfo();
 
     void showCommand(const char *p);
 
     void addChar(const char);
 
     void flushScreen();
-    
+
     void clearScreen();
 
-//    void writePool();
+    void writeCmdPool(const char *cmd);
 
+    void writeGameInfoPool(int seconds, int score);
 };
-
 
 #endif

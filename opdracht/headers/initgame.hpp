@@ -18,7 +18,7 @@ class Initgame : public rtos::task<> {
 
    public:
     Initgame(send_controller &send_channel, DisplayController &display):
-        task(5, "Initgame Task"),
+        task(6, "Initgame Task"),
         keypadchannel(this, "Initgame keypad channel"),
         send_channel( send_channel ),
         display( display )
