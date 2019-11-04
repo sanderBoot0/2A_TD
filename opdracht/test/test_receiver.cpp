@@ -1,4 +1,4 @@
-#include "../headers/test_receiver.hpp"
+#include "test_receiver.hpp"
 
 #include "hwlib.hpp"
 #include "rtos.hpp"

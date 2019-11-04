@@ -34,9 +34,9 @@ int main(){
     namespace target = hwlib::target;
 
 // // Ir-Receiver pins
-//     auto data = target::pin_in(target::pins::d8);
-//     auto gnd  = target::pin_out(target::pins::d10);
-//     auto vcc  = target::pin_out(target::pins::d9);
+    // auto data = target::pin_in(target::pins::d8);
+    // auto gnd  = target::pin_out(target::pins::d10);
+    // auto vcc  = target::pin_out(target::pins::d9);
 
 // Display I2C pins
     auto scl = target::pin_oc( target::pins::scl );
@@ -67,26 +67,33 @@ int main(){
 // ORDER! of the keys on the keypad
     auto message = "123A456B789C*0#D";
     auto keypadaanmaak = hwlib::keypad<16>(matrix, message);
-    
-    auto regGame1 = RegGame();
-    auto keypad = Keypadclass(keypadaanmaak, regGame1);
 
-    // auto receiver = receiver_controller(data, gnd, vcc, printer);
+
+    auto displayCtrl = DisplayController(oled, font);
+
     auto sender = send_controller();
 
-    // auto tijd = time(11, 11);
-    auto displayCtrl = displayController(oled, font);
-
     auto initGameCtrl = Initgame(sender, displayCtrl);
+    auto regGame1 = RegGame();
+    auto keypad = Keypadclass(keypadaanmaak, regGame1, initGameCtrl);
 
+    // auto receiver = Receiver_controller(data, gnd, vcc, printer);
+    
+
+    auto tijd = time(11, 11);
+    
+
+    
+    (void) sender;
+
+    (void) initGameCtrl;
 
     (void) regGame1;
     (void) keypad;
     
-    // (void) displayCtrl;
+    
     // (void) receiver;
     
-    // (void) sender;
     
     // wait for the PC console to start
     hwlib::wait_ms( 500 );

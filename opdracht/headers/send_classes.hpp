@@ -38,7 +38,7 @@ class send_controller : public rtos::task<> {
    public:
     send_controller(): 
         task(2, "send_task"),
-        ir_send(),
+        //ir_send(),
         messages_channel(this, "messages_channel") 
     {}
 

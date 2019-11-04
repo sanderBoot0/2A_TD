@@ -9,26 +9,14 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-# SOURCES := 
+SOURCES := ../source/displaycontroller.cpp ../source/send_classes.cpp ../source/initgame.cpp
 
-SOURCES := ../source/displaydontroller.cpp
-SOURCES := ../source/receive_classes.cpp
-SOURCES := ../source/send_classes.cpp
-SOURCES := ../source/initgame.cpp
+# ../source/receive_classes.cpp
 
 # header files in this project
-# HEADERS := GameRules.hpp RegGame.hpp keypadclass.hpp 
+HEADERS := ../headers/gamerules.hpp ../headers/reg_game.hpp ../headers/initgame.hpp ../headers/keypadclass.hpp ../headers/time_entity.hpp ../headers/displaycontroller.hpp ../headers/send_classes.hpp
 
-HEADERS := ../headers/gamerules.hpp
-HEADERS := ../headers/reg_game.hpp
-HEADERS := ../headers/initgame.hpp
-HEADERS := ../headers/keypadclass.hpp
-
-HEADERS := ../headers/time_entity.hpp
-HEADERS := ../headers/displayController.hpp
-
-HEADERS := ../headers/receive_classes.hpp
-HEADERS := ../headers/send_classes.hpp
+#  ../headers/receive_classes.hpp
 
 # other places to look for files for this project
 SEARCH  := 

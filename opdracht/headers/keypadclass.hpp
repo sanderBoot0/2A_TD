@@ -18,6 +18,7 @@ public:
             if(keypadmatrix.char_available()){
                 auto keypadinput = keypadmatrix.getc();
                 gamePar.write(keypadinput);
+                initGame.write(keypadinput);
 
             }
         }

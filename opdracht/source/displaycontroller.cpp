@@ -1,4 +1,4 @@
-#include "../headers/displaydontroller.hpp"
+#include "../headers/displaycontroller.hpp"
 
 void DisplayController::showTime(time &t) {
     display << '\f';
@@ -18,13 +18,26 @@ void DisplayController::showTime(time &t) {
 
 }
 
-
 void DisplayController::showCommand(const char *p) {
-    display << '\f';
+    display << '\f' ;
 
-    while(*p++) {
-        display << *p;
-    }
+    do{
+        display << *p++;
 
+    }while(*p != '\0');
+
+    flushScreen();
+}
+
+void DisplayController::addChar(const char c){
+    display << c;
+}
+
+void DisplayController::flushScreen(){
     display << hwlib::flush;
+}
+
+void DisplayController::clearScreen(){
+    display << '\f';
+    flushScreen();
 }

@@ -9,10 +9,10 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES := ../../sendReceive/source/receive_classes.cpp ../../sendReceive/source/test_receiver.cpp
+SOURCES := ../../source/receive_classes.cpp ../test_receiver.cpp
 
 # header files in this project
-HEADERS :=  ../../sendReceive/headers/receive_classes.hpp ../../sendReceive/headers/test_receiver.hpp
+HEADERS :=  ../../headers/receive_classes.hpp ../test_receiver.hpp
 
 # other places to look for files for this project
 SEARCH  :=
