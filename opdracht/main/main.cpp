@@ -22,6 +22,11 @@ AUTHORS:
 #include "../headers/receive_classes.hpp"
 #include "../headers/send_classes.hpp"
 
+#include "../headers/run_game.hpp"
+
+#include "../headers/gamerules.hpp"
+
+#include "../headers/button.hpp"
 
 #include "hwlib.hpp"
 #include "rtos.hpp"
@@ -33,9 +38,9 @@ int main(){
     namespace target = hwlib::target;
 
 // // Ir-Receiver pins
-//     auto data = target::pin_in(target::pins::d8);
-//     auto gnd  = target::pin_out(target::pins::d10);
-//     auto vcc  = target::pin_out(target::pins::d9);
+    auto data = target::pin_in(target::pins::d8);
+    auto gnd  = target::pin_out(target::pins::d10);
+    auto vcc  = target::pin_out(target::pins::d9);
 
 // // Display I2C pins
 //     auto scl = target::pin_oc( target::pins::scl );
@@ -63,27 +68,41 @@ int main(){
     auto out_port = hwlib::port_oc_from( out0, out1, out2, out3 );
     auto in_port  = hwlib::port_in_from( in0,  in1,  in2,  in3  );
     auto matrix = hwlib::matrix_of_switches( out_port, in_port );
-// ORDER! of the keys on the keypad
+
+    auto button = target::pin_in( target::pins::d6 );
+
     auto message = "123A456B789C*0#D";
     auto keypadaanmaak = hwlib::keypad<16>(matrix, message);
-    
-    auto regGame1 = RegGame();
+
+    auto game_par = GameRules();
+
+    auto regGame1 = RegGame(game_par);
     auto keypad = Keypadclass(keypadaanmaak, regGame1);
 
-    // auto receiver = receiver_controller(data, gnd, vcc, printer);
-    // auto sender = send_controller();
+    auto buttonCtrl = Button(button);
+
+    auto receiver = Receiver_controller(data, gnd, vcc/*, printer*/);
+    auto sender = send_controller();
 
     // auto tijd = time(11, 11);
     // auto displayCtrl = displayController(oled, font);
 
+    auto runCtrl = Rungame(sender, game_par);
 
-    (void) regGame1;
+    buttonCtrl.addListener(&runCtrl);
+
+
     (void) keypad;
+    (void) regGame1;
     
     // (void) displayCtrl;
-    // (void) receiver;
+    (void) receiver;
     
-    // (void) sender;
+    (void) sender;
+
+    (void) runCtrl;
+
+    (void) buttonCtrl;
     
     // wait for the PC console to start
     hwlib::wait_ms( 500 );

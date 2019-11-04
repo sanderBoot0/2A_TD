@@ -11,7 +11,7 @@ class RegGame : public rtos::task<> {
    private:
     rtos::channel<char, 16> keypadchannel;
 
-    GameRules g;
+    GameRules &g;
 
     void main() {
         enum regGameStates { Idle, RegPlayer, RegFP, WaitGameTime, WaitRun };
@@ -121,9 +121,10 @@ class RegGame : public rtos::task<> {
     }
 
    public:
-    RegGame()
-        : task(4, "RegGame"),
-          keypadchannel(this, "keypadchannel")
+    RegGame(GameRules &g): 
+        task(5, "RegGame"),
+        keypadchannel(this, "keypadchannel"),
+        g(g)
     {}
 
     void write(const char k) { keypadchannel.write(k); }
