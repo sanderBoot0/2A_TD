@@ -1,6 +1,6 @@
-#include "../headers/displaydontroller.hpp"
+#include "../headers/displaycontroller.hpp"
 
-void displayController::showTime(time &t) {
+void DisplayController::showTime(time &t) {
     display << '\f';
 
     unsigned int minutes = t.getMinutes();

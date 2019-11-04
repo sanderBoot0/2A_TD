@@ -22,7 +22,7 @@ public:
     }
 
     Keypadclass(hwlib::istream &keypadconstructor, RegGame &gamePar):
-        task(3, "keypad"),
+        task(4, "keypad"),
         period_clock(this, 100 * rtos::ms, "Keypadclass periodieke klok"),
         keypadmatrix(keypadconstructor),
         gamePar( gamePar )
