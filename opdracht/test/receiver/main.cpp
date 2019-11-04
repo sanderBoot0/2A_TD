@@ -1,8 +1,8 @@
 #include "hwlib.hpp"
 #include "rtos.hpp"
-#include "../../sendReceive/headers/receive_classes.hpp"
+#include "../../headers/receive_classes.hpp"
 // #include "../../sendReceive/headers/msg_decoder.hpp"
-#include "../../sendReceive/headers/test_receiver.hpp"
+#include "../test_receiver.hpp"
 
 
 int main(void) {
@@ -27,9 +27,9 @@ int main(void) {
     auto font    = hwlib::font_default_16x16();
     auto display = hwlib::terminal_from( oled, font );
 
-    auto printer = test_receiver(display);
+    auto printer = Test_receiver(display);
     // auto decoder = msg_decoder(printer);
-    auto receiver = receiver_controller(data, gnd, vcc, printer);
+    auto receiver = Receiver_controller(data, gnd, vcc, printer);
     
     (void) printer;
     // (void) decoder;

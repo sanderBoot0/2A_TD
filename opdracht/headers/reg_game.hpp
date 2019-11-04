@@ -21,7 +21,7 @@ class RegGame : public rtos::task<> {
 
         char temp;
 
-        regGameStates state = regGameStates::RegPlayer;
+        regGameStates state = regGameStates::Idle;
 
         hwlib::cout << "Type A to Continue, " << '\n';
         for (;;) {
@@ -29,18 +29,22 @@ class RegGame : public rtos::task<> {
             switch (state) {
                 case Idle: {
                     hwlib::cout << "Idle state" << hwlib::endl;
+                    wait(keypadchannel);
+                    if(keypadchannel.read() == 'A'){
+                        state = regGameStates::RegPlayer;
+                    }
+                    else if(keypadchannel.read() == 'C'){
+
+                    }
                     break;
                 }
                 case RegPlayer: {
                     switch (regplayerstate) {
                         case substates::waitforletter: {
                             wait(keypadchannel);
-
-                            if (keypadchannel.read() == 'A') {
-                                hwlib::cout << "A pressed, " << '\n'
-                                            << "Type Number" << '\n';
-                                regplayerstate = substates::waitfornumber;
-                            }
+                            hwlib::cout << "A pressed, " << '\n'
+                                        << "Type Number" << '\n';
+                            regplayerstate = substates::waitfornumber;
                             break;
                         }
                         case substates::waitfornumber: {
@@ -121,7 +125,7 @@ class RegGame : public rtos::task<> {
 
    public:
     RegGame(GameRules &g): 
-        task(5, "RegGame"),
+        : task(7, "RegGame"),
         keypadchannel(this, "keypadchannel"),
         g(g)
     {}

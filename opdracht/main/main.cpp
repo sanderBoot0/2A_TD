@@ -14,6 +14,7 @@ AUTHORS:
 
 #include "../headers/gamerules.hpp"
 #include "../headers/reg_game.hpp"
+#include "../headers/initgame.hpp"
 #include "../headers/keypadclass.hpp"
 
 #include "../headers/time_entity.hpp"
@@ -46,14 +47,14 @@ int main(){
     auto gnd  = target::pin_out(target::pins::d10);
     auto vcc  = target::pin_out(target::pins::d9);
 
-// // Display I2C pins
-//     auto scl = target::pin_oc( target::pins::scl );
-//     auto sda = target::pin_oc( target::pins::sda );
-//     auto i2c_bus = hwlib::i2c_bus_bit_banged_scl_sda( scl,sda );
+// Display I2C pins
+    auto scl = target::pin_oc( target::pins::scl );
+    auto sda = target::pin_oc( target::pins::sda );
+    auto i2c_bus = hwlib::i2c_bus_bit_banged_scl_sda( scl,sda );
 
-// // Declaration of Display and font for displayController class
-//     auto oled = hwlib::glcd_oled( i2c_bus, 0x3c ); 
-//     auto font = hwlib::font_default_16x16();
+// Declaration of Display and font for displayController class
+    auto oled = hwlib::glcd_oled( i2c_bus, 0x3c ); 
+    auto font = hwlib::font_default_16x16();
 
 // reciever tester main ================================================
 
@@ -78,6 +79,15 @@ int main(){
     auto message = "123A456B789C*0#D";
     auto keypadaanmaak = hwlib::keypad<16>(matrix, message);
 
+
+    auto displayCtrl = DisplayController(oled, font);
+
+    auto sender = send_controller();
+
+    auto initGameCtrl = Initgame(sender, displayCtrl);
+    auto regGame1 = RegGame();
+    auto keypad = Keypadclass(keypadaanmaak, regGame1, initGameCtrl);
+
     auto beeper_pin = target::pin_out( target::pins::d7 );
     auto p = note_player_gpio( beeper_pin );
 
@@ -98,6 +108,7 @@ int main(){
 
     auto runCtrl = Rungame(sender, game_par, beeper);
 
+    (void) initGameCtrl;
     buttonCtrl.addListener(&runCtrl);
     receiver.addListener(&runCtrl);
 
