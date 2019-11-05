@@ -8,19 +8,17 @@ void Initgame::main() {
     uint16_t msg = 0;
     for (;;) {
         switch (state) {
-            case Idle: {
-                display.writeGameInfoPool(260,69);
+            case state_t::Idle: {
                 wait(keypadchannel);
                 if (keypadchannel.read() == 'C') {
                     display.clearScreen();
                     display.writeCmdPool("CMD\nC");
-                
                     time = 0;
-                    state = RegTime;
+                    state = state_t::RegTime;
                 }
                 break;
             }
-            case RegTime: {
+            case state_t::RegTime: {
                 wait(keypadchannel);
                 char temp = keypadchannel.read();
 
@@ -35,7 +33,7 @@ void Initgame::main() {
                         display.addChar(temp);
                         display.flushScreen();
 
-                        state = SendTime;
+                        state = state_t::SendTime;
                     } else {
                         display.clearScreen();
                         display.writeCmdPool("CMD\nC");
@@ -44,7 +42,7 @@ void Initgame::main() {
                 }
                 break;
             }
-            case SendTime: {
+            case state_t::SendTime: {
                 wait(keypadchannel);
                 char temp = keypadchannel.read();
 
@@ -57,7 +55,7 @@ void Initgame::main() {
                     temp = '.';
                 } else if (temp == '*') {
                     time = 0;
-                    state = SetStartSignal;
+                    state = state_t::SetStartSignal;
                 }
 
                 break;
@@ -85,7 +83,7 @@ void Initgame::main() {
 uint16_t Initgame::encodeMsg(uint8_t data) {
     uint16_t msg = (1 << 15);
 
-    data &= ~(0b11100000);
+    data &= ~(0b11110000);
     msg += (data << 5);
     msg |= data;
 

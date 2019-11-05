@@ -9,14 +9,10 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES := ../source/displaycontroller.cpp ../source/send_classes.cpp ../source/initgame.cpp
-
-SOURCES := ../source/displaycontroller.cpp ../source/receive_classes.cpp ../source/send_classes.cpp ../source/run_game.cpp ../source/note_player_gpio.cpp ../source/rtttl_player.cpp
+SOURCES := ../source/displaycontroller.cpp ../source/receive_classes.cpp ../source/send_classes.cpp ../source/run_game.cpp ../source/note_player_gpio.cpp ../source/rtttl_player.cpp ../source/initgame.cpp ../source/reg_game.cpp
 
 # header files in this project
-HEADERS := ../headers/gamerules.hpp ../headers/reg_game.hpp ../headers/initgame.hpp ../headers/keypadclass.hpp ../headers/time_entity.hpp ../headers/displaycontroller.hpp ../headers/send_classes.hpp
-
-HEADERS := ../headers/gamerules.hpp ../headers/reg_game.hpp ../headers/keypadclass.hpp ../headers/time_entity.hpp ../headers/displaycontroller.hpp ../headers/receive_classes.hpp ../headers/send_classes.hpp ../headers/run_game.hpp ../headers/button.hpp ../headers/buttonlistener.hpp ../headers/run_game.hpp ../headers/note_player_gpio.hpp ../headers/rtttl_player.hpp ../headers/note.hpp ../headers/beeperCtrl.hpp
+HEADERS := ../headers/gamerules.hpp ../headers/reg_game.hpp ../headers/keypadclass.hpp ../headers/time_entity.hpp ../headers/displaycontroller.hpp ../headers/receive_classes.hpp ../headers/send_classes.hpp ../headers/run_game.hpp ../headers/button.hpp ../headers/buttonlistener.hpp ../headers/run_game.hpp ../headers/note_player_gpio.hpp ../headers/rtttl_player.hpp ../headers/note.hpp ../headers/beeperCtrl.hpp ../headers/score.hpp ../headers/transferHits.hpp
 
 # other places to look for files for this project
 SEARCH  := 

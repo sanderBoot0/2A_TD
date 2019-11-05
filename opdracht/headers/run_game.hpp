@@ -14,6 +14,10 @@
 
 #include "beeperCtrl.hpp"
 
+#include "displaycontroller.hpp"
+
+#include "score.hpp"
+
 class Rungame : public rtos::task<>, public MsgListener, public Buttonlistener {
    private:
     rtos::channel<uint16_t, 10> messages;
@@ -28,6 +32,10 @@ class Rungame : public rtos::task<>, public MsgListener, public Buttonlistener {
 
     Beeper &beeper;
 
+    DisplayController &display;
+
+    score &score_hit_entity;
+
     bool shoot_available = true;
 
     void main();
@@ -40,7 +48,7 @@ class Rungame : public rtos::task<>, public MsgListener, public Buttonlistener {
 
    public:
 
-    Rungame(send_controller &send_channel, GameRules &game_par, Beeper &p_beeper):
+    Rungame(send_controller &send_channel, GameRules &game_par, Beeper &p_beeper, DisplayController &p_display, score &scores):
         task(3, "Rungame Control"), 
         messages(this, "Message channel"),
         second_clock(this, 1000 * rtos::ms, "seconds period clock"),
@@ -48,7 +56,9 @@ class Rungame : public rtos::task<>, public MsgListener, public Buttonlistener {
         button_pressed_flag(this, "shoot button pressed flag"),
         sender(send_channel),
         game_par(game_par),
-        beeper( p_beeper )
+        beeper( p_beeper ),
+        display( p_display),
+        score_hit_entity( scores )
     {}
 
     void buttonPressed() override {
@@ -57,3 +67,6 @@ class Rungame : public rtos::task<>, public MsgListener, public Buttonlistener {
 };
 
 #endif // RUN_GAME_HPP
+
+
+

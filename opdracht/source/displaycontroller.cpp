@@ -33,6 +33,7 @@ void DisplayController::showCommand(const char *p) {
 
 void DisplayController::addChar(const char c){
     display << c;
+    flushScreen();
 }
 
 void DisplayController::flushScreen(){
