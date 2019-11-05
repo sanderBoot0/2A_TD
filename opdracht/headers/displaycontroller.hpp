@@ -4,8 +4,6 @@
 #include "hwlib.hpp"
 #include "rtos.hpp"
 
-#include "time_entity.hpp"
-
 struct gameinfo {
    public:
     // time & score

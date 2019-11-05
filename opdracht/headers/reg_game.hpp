@@ -8,8 +8,9 @@
 
 
 #include "displaycontroller.hpp"
+#include "keypadlistener.hpp"
 
-class RegGame : public rtos::task<>, public MsgListener {
+class RegGame : public rtos::task<>, public MsgListener, public KeypadListener {
    private:
     rtos::channel<uint16_t, 10> messages;
     rtos::channel<char, 16> keypadchannel;
@@ -39,7 +40,7 @@ overrided function for channels
 
 */
 
-    void write(const char k) { 
+    void write(const char k) override { 
         keypadchannel.write(k); 
     }
     

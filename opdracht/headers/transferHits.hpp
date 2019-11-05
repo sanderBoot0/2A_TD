@@ -8,7 +8,7 @@
 // prioriteit 10
 class TransferHits : public rtos::task<> {
 private:
-    GameRules &g;
+    rtos::flag gameOver;
     score &hits;
 
     void main() {
@@ -18,13 +18,13 @@ private:
         for(;;) {
             switch(state) {
                 case states::WAIT_FOR_ENDING: {
-                    hwlib::wait_ms(1000);
-                    if(g.getFinishedSignal()) {
-                        state = states::WAIT_FOR_USB;
-                    }
+                    wait(gameOver);
+                    state = states::WAIT_FOR_USB;
+
                     break;
                 }
                 case states::WAIT_FOR_USB: {
+                    hwlib::cout << "Press 'D', to start transfer";
                     char input;
                     hwlib::cin >> input;
                     if(input == 'D') {
@@ -34,18 +34,23 @@ private:
                     break;
                 }
                 case states::TRANSFERING: {
+                    int health = 100;
                     for(int i = 0;; i++) {
                         auto hit = hits.getHit(i);
                         if(hit.playerID == 0 && hit.damage == 0) {
-                            hwlib::cout << "No hits\n'";
                             break;
                         } else {
-                            hwlib::cout << hit.playerID << '\t' << hit.damage << '\n';
+                            health -= hit.damage;
+                            if(health < 0) { health = 0; }
+                            hwlib::cout << "Player: " << hit.playerID << "\tHit damage: " << hit.damage << "\tRemaining health: " << health << '\n';
                         }
+                    }
+                    if(health == 100) {
+                        hwlib::cout << "No hits!\nWell Played!\n";
                     }
                 }
                 case states::DONE: {
-                    hwlib::wait_ms(1'000'000'000);
+                    state = states::WAIT_FOR_ENDING;
                     break;
                 }
             }
@@ -53,12 +58,15 @@ private:
     }
 
 public:
-    TransferHits(GameRules &g, score &hits):
+    TransferHits(score &hits):
         task(10, "Transfer hits task"),
-        g( g ),
+        gameOver(this, "Start transfer flag"),
         hits( hits )
     {}
 
+    void startTransfer() {
+        gameOver.set();
+    }
 };
 
 #endif // TRANSFER_HITS_HPP

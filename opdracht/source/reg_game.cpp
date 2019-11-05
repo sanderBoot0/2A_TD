@@ -1,7 +1,7 @@
 #include "../headers/reg_game.hpp"
 
 void RegGame::main() {
-    enum regGameStates { Idle, RegPlayer, RegFP, WaitGameTime, WaitRun, GameLeader };
+    enum regGameStates { Idle, RegPlayer, RegFP, WaitGameTime, WaitRun, GameLeader, Started };
     enum substates { waitforletter, waitfornumber, registernumber };
     substates regplayerstate = substates::waitforletter;
     substates regfirepowerstate = substates::waitforletter;
@@ -127,11 +127,15 @@ void RegGame::main() {
                 auto msg = messages.read();
                 if(msg == (1 << 15)){
                     g.setStartSignal();
+                    state = regGameStates::Started;
                 }
 
-                // Wait for IR Input
-                // if(IR Input == start)
-                //
+
+
+                break;
+            }
+            case regGameStates::Started: {
+                hwlib::wait_ms(1'000'000'000);
                 break;
             }
         }

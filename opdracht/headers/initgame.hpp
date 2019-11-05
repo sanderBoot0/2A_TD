@@ -7,8 +7,9 @@
 
 #include "send_classes.hpp"
 #include "displaycontroller.hpp"
+#include "keypadlistener.hpp"
 
-class Initgame : public rtos::task<> {
+class Initgame : public rtos::task<>, public KeypadListener {
    private:
     rtos::channel<char, 16> keypadchannel;
     send_controller &send_channel;
@@ -24,7 +25,7 @@ class Initgame : public rtos::task<> {
         display( display )
     {}
 
-    void write(const char k) { keypadchannel.write(k); }
+    void write(const char k) override { keypadchannel.write(k); }
     uint16_t encodeMsg( uint8_t data );
     char* appendCharToCharArray(char* array, char a);
 

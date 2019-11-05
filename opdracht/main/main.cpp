@@ -17,7 +17,6 @@ AUTHORS:
 #include "../headers/initgame.hpp"
 #include "../headers/keypadclass.hpp"
 
-#include "../headers/time_entity.hpp"
 #include "../headers/displaycontroller.hpp"
 
 #include "../headers/receive_classes.hpp"
@@ -92,23 +91,26 @@ int main(){
 
     auto initGameCtrl = Initgame(sender, displayCtrl);
     auto regGame1 = RegGame(game_par, displayCtrl);
-    auto keypad = Keypadclass(keypadaanmaak, regGame1, initGameCtrl);
+    auto keypad = Keypadclass(keypadaanmaak);
 
     auto beeper_pin = target::pin_out( target::pins::d7 );
     auto p = note_player_gpio( beeper_pin );
 
-    auto beeper = Beeper(beeper_pin, p);
+    auto beeper = Beeper(p);
 
     auto buttonCtrl = Button(button);
 
     auto score_hit_entity = score();
 
+    auto transferHitsCtrl = TransferHits(score_hit_entity);
 
-    auto runCtrl = Rungame(sender, game_par, beeper, displayCtrl, score_hit_entity);
+    auto runCtrl = Rungame(sender, game_par, beeper, displayCtrl, score_hit_entity, transferHitsCtrl);
 
-    auto transferHitsCtrl = TransferHits(game_par, score_hit_entity);
 
     // Listeners
+
+    keypad.addListener(&initGameCtrl);
+    keypad.addListener(&regGame1);
 
     buttonCtrl.addListener(&runCtrl);
     receiver.addListener(&runCtrl);

@@ -3,6 +3,7 @@
 void Rungame::main() {
     enum states {
         CHANGE_GAME_TIME,
+        HIT_AVAILABLE,
         MSG_RECV,
         SHOOTING,
         SHOOTING_AVAILABLE,
@@ -30,7 +31,7 @@ void Rungame::main() {
 
     for(;;) {
         if (state != states::GAME_OVER) {
-            auto wait_event = wait(button_pressed_flag + second_clock +
+            auto wait_event = wait(button_pressed_flag + hit_timer + second_clock +
                                    shoot_timer + messages);
 
             if (wait_event == second_clock) {
@@ -41,6 +42,8 @@ void Rungame::main() {
                 state = states::SHOOTING;
             } else if (wait_event == messages) {
                 state = states::MSG_RECV;
+            } else if (wait_event == hit_timer) {
+                state = states::HIT_AVAILABLE;
             } else {
                 state = states::GAME_OVER;
             }
@@ -50,7 +53,7 @@ void Rungame::main() {
             case states::CHANGE_GAME_TIME: {
                 // hwlib::cout << "Tijd\n";
                 auto seconds = game_par.getGameTime();
-                hwlib::cout << seconds << '\n';
+
                 if (seconds <= 0) {
                     // hwlib::cout << "seconds 0\n";
                     state = states::GAME_OVER;
@@ -62,30 +65,39 @@ void Rungame::main() {
 
                 break;
             }
+            case states::HIT_AVAILABLE: {
+                can_be_hit = true;
+                break;
+            }
             case states::MSG_RECV: {
-                // hwlib::cout << "message\n";
-
                 auto m = messages.read();
 
-                uint8_t playerData = (m & 0b0111110000000000) >> 10;
-                uint8_t weaponType = (m & 0b0000001111100000) >> 5;
+                if(can_be_hit) {
+                    uint8_t playerData = (m & 0b0111110000000000) >> 10;
+                    uint8_t weaponType = (m & 0b0000001111100000) >> 5;
 
-                if (playerData == 0) {
-                    break;
+                    if (playerData == 0 || playerData == game_par.getPlayerNumber()) {
+                        break;
+                    }
+
+                    score_hit_entity.addHit(playerData, weaponType);
+
+                    int seconds = game_par.getGameTime();
+                    int score = score_hit_entity.getScore();
+
+                    beeper.hit();
+
+                    can_be_hit = false;
+                    hit_timer.set(100'000);
+
+                    if (score <= 0) {
+                        score = 0;
+                        state = states::GAME_OVER;
+                    }   
+
+                    display.writeGameInfoPool(seconds, score);
                 }
 
-                score_hit_entity.addHit(playerData, weaponType);
-
-                int seconds = game_par.getGameTime();
-                int score = score_hit_entity.getScore();
-
-                beeper.hit();
-
-                if (score <= 0) {
-                    // hwlib::cout << "Score 0\n";
-                    state = states::GAME_OVER;
-                }
-                display.writeGameInfoPool(seconds, score);
                 break;
             }
             case states::SHOOTING_AVAILABLE: {
@@ -110,6 +122,7 @@ void Rungame::main() {
                 game_par.setFinishedSignal();
                 hwlib::wait_ms(1'000);
                 display.writeCmdPool("\n  Game\n  Over!");
+                transferHitCtrl.startTransfer();
                 hwlib::wait_ms(1'000'000'000);
             }
         }

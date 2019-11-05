@@ -18,12 +18,15 @@
 
 #include "score.hpp"
 
+#include "transferHits.hpp"
+
 class Rungame : public rtos::task<>, public MsgListener, public Buttonlistener {
    private:
     rtos::channel<uint16_t, 10> messages;
 
     rtos::clock second_clock;
     rtos::timer shoot_timer;
+    rtos::timer hit_timer; // Timeout when you get hit
     rtos::flag button_pressed_flag;
 
     send_controller &sender;
@@ -36,7 +39,10 @@ class Rungame : public rtos::task<>, public MsgListener, public Buttonlistener {
 
     score &score_hit_entity;
 
+    TransferHits &transferHitCtrl;
+
     bool shoot_available = true;
+    bool can_be_hit = true;
 
     void main();
 
@@ -48,17 +54,24 @@ class Rungame : public rtos::task<>, public MsgListener, public Buttonlistener {
 
    public:
 
-    Rungame(send_controller &send_channel, GameRules &game_par, Beeper &p_beeper, DisplayController &p_display, score &scores):
+    Rungame(send_controller &send_channel, 
+            GameRules &game_par, 
+            Beeper &p_beeper,
+            DisplayController &p_display, 
+            score &scores, 
+            TransferHits &transferHitCtrl):
         task(3, "Rungame Control"), 
         messages(this, "Message channel"),
         second_clock(this, 1000 * rtos::ms, "seconds period clock"),
         shoot_timer(this, "shoot delay timer"),
+        hit_timer(this, "Hit delay timer"),
         button_pressed_flag(this, "shoot button pressed flag"),
         sender(send_channel),
         game_par(game_par),
         beeper( p_beeper ),
-        display( p_display),
-        score_hit_entity( scores )
+        display( p_display ),
+        score_hit_entity( scores ),
+        transferHitCtrl( transferHitCtrl )
     {}
 
     void buttonPressed() override {

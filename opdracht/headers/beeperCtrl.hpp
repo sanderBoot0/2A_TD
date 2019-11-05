@@ -10,7 +10,6 @@ private:
     rtos::flag shoot_flag;
     rtos::flag hit_flag;
     rtos::flag finished_flag;
-    hwlib::pin_out &beep_pin;
     note_player_gpio &p;
 
     void main() {
@@ -41,14 +40,13 @@ private:
     }
 
 public: 
-    Beeper(hwlib::pin_out &p, note_player_gpio &player) :
+    Beeper(note_player_gpio &player) :
         task(5, "Beep task"),
         countdown_flag(this, "countdown beep flag"),
         start_flag(this, "start beep flag"),
         shoot_flag(this, "shoot beep flag"),
         hit_flag(this, "hit beep flag"),
         finished_flag(this, "finished beep flag"),
-        beep_pin( p ),
         p( player )
     {}
 
