@@ -14,18 +14,31 @@ AUTHORS:
 
 #include "../headers/gamerules.hpp"
 #include "../headers/reg_game.hpp"
+#include "../headers/initgame.hpp"
 #include "../headers/keypadclass.hpp"
 
-#include "../headers/time_entity.hpp"
 #include "../headers/displaycontroller.hpp"
 
 #include "../headers/receive_classes.hpp"
 #include "../headers/send_classes.hpp"
 
+#include "../headers/run_game.hpp"
+
+#include "../headers/gamerules.hpp"
+
+#include "../headers/button.hpp"
+
+#include "../headers/note_player_gpio.hpp"
+#include "../headers/rtttl_player.hpp"
+
+#include "../headers/score.hpp"
+
+#include "../headers/beeperCtrl.hpp"
+
+#include "../headers/transferHits.hpp"
 
 #include "hwlib.hpp"
 #include "rtos.hpp"
-
 
 int main(){
         
@@ -33,18 +46,18 @@ int main(){
     namespace target = hwlib::target;
 
 // // Ir-Receiver pins
-//     auto data = target::pin_in(target::pins::d8);
-//     auto gnd  = target::pin_out(target::pins::d10);
-//     auto vcc  = target::pin_out(target::pins::d9);
+    auto data = target::pin_in(target::pins::d8);
+    auto gnd  = target::pin_out(target::pins::d10);
+    auto vcc  = target::pin_out(target::pins::d9);
 
-// // Display I2C pins
-//     auto scl = target::pin_oc( target::pins::scl );
-//     auto sda = target::pin_oc( target::pins::sda );
-//     auto i2c_bus = hwlib::i2c_bus_bit_banged_scl_sda( scl,sda );
+// Display I2C pins
+    auto scl = target::pin_oc( target::pins::scl );
+    auto sda = target::pin_oc( target::pins::sda );
+    auto i2c_bus = hwlib::i2c_bus_bit_banged_scl_sda( scl,sda );
 
-// // Declaration of Display and font for displayController class
-//     auto oled = hwlib::glcd_oled( i2c_bus, 0x3c ); 
-//     auto font = hwlib::font_default_16x16();
+// Declaration of Display and font for displayController class
+    auto oled = hwlib::glcd_oled( i2c_bus, 0x3c ); 
+    auto font = hwlib::font_default_16x16();
 
 // reciever tester main ================================================
 
@@ -59,31 +72,69 @@ int main(){
     auto in2  = target::pin_in( target::pins::a6 );
     auto in3  = target::pin_in( target::pins::a7 );
     
-// pin list of in's and out's
+// pin list of in's and out's for keyboard matrix
     auto out_port = hwlib::port_oc_from( out0, out1, out2, out3 );
     auto in_port  = hwlib::port_in_from( in0,  in1,  in2,  in3  );
     auto matrix = hwlib::matrix_of_switches( out_port, in_port );
-// ORDER! of the keys on the keypad
+
+    auto button = target::pin_in( target::pins::d6 );
+
     auto message = "123A456B789C*0#D";
     auto keypadaanmaak = hwlib::keypad<16>(matrix, message);
-    
-    auto regGame1 = RegGame();
-    auto keypad = Keypadclass(keypadaanmaak, regGame1);
 
-    // auto receiver = receiver_controller(data, gnd, vcc, printer);
-    // auto sender = send_controller();
+    auto receiver = Receiver_controller(data, gnd, vcc);
+    auto sender = send_controller();
 
-    // auto tijd = time(11, 11);
-    // auto displayCtrl = displayController(oled, font);
+    auto displayCtrl = DisplayController(oled, font);
+
+    auto game_par = GameRules();
+
+    auto initGameCtrl = Initgame(sender, displayCtrl);
+    auto regGame1 = RegGame(game_par, displayCtrl);
+    auto keypad = Keypadclass(keypadaanmaak);
+
+    auto beeper_pin = target::pin_out( target::pins::d7 );
+    auto p = note_player_gpio( beeper_pin );
+
+    auto beeper = Beeper(p);
+
+    auto buttonCtrl = Button(button);
+
+    auto score_hit_entity = score();
+
+    auto transferHitsCtrl = TransferHits(score_hit_entity);
+
+    auto runCtrl = Rungame(sender, game_par, beeper, displayCtrl, score_hit_entity, transferHitsCtrl);
 
 
-    (void) regGame1;
+    // Listeners
+
+    keypad.addListener(&initGameCtrl);
+    keypad.addListener(&regGame1);
+
+    buttonCtrl.addListener(&runCtrl);
+    receiver.addListener(&runCtrl);
+    receiver.addListener(&regGame1);
+
+    // Voids to cancel the unused errors because of RTOS
+
+    (void) initGameCtrl;
+
     (void) keypad;
+    (void) regGame1;
     
-    // (void) displayCtrl;
-    // (void) receiver;
+    (void) displayCtrl;
+    (void) receiver;
     
-    // (void) sender;
+    (void) sender;
+
+    (void) runCtrl;
+
+    (void) buttonCtrl;
+
+    (void) beeper;
+
+    (void) transferHitsCtrl;
     
     // wait for the PC console to start
     hwlib::wait_ms( 500 );

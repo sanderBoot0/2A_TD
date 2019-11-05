@@ -3,37 +3,33 @@
 
 #include "hwlib.hpp"
 #include "rtos.hpp"
+//#include <string>
 
-class Initgame : public rtos::task<> {
+#include "send_classes.hpp"
+#include "displaycontroller.hpp"
+#include "keypadlistener.hpp"
+
+class Initgame : public rtos::task<>, public KeypadListener {
    private:
     rtos::channel<char, 16> keypadchannel;
+    send_controller &send_channel;
+    DisplayController &display;
 
-    void main() {
-        enum state_t = {Idle, RegTime, SetStartSignal};
-        state = Idle;
-        for (;;) {
-            switch (state) {
-                case Idle:
-                    wait(keypadchannel);
-                    if (keypadchannel.read() == 'C') {
-                        state = RegTime;
-                    }
-                    break;
-
-                case RegTime:
-                    wait(keypadchannel);
-
-                    break;
-
-                case SetStartSignal:
-
-                    break;
-            }
-        }
-    }
+    void main();
 
    public:
-    void write(const char k) { keypadchannel.write(k); }
+    Initgame(send_controller &send_channel, DisplayController &display):
+        task(7, "Initgame Task"),
+        keypadchannel(this, "Initgame keypad channel"),
+        send_channel( send_channel ),
+        display( display )
+    {}
+
+    void write(const char k) override { keypadchannel.write(k); }
+    uint16_t encodeMsg( uint8_t data );
+    char* appendCharToCharArray(char* array, char a);
+
+
 };
 
 #endif  // INITGAME_HPP

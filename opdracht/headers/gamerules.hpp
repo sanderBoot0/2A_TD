@@ -10,6 +10,7 @@ protected:
     int cooldown = firepower / 3 * 1000;
     int firepower;
     bool startsignal = false;
+    bool gameFinished = false;
     int gametime;
 
 public:
@@ -26,6 +27,10 @@ public:
         return startsignal;
     }
 
+    bool getFinishedSignal() {
+        return gameFinished;
+    }
+
     int getGameTime(){
         return gametime;
     }
@@ -40,6 +45,10 @@ public:
 
     void setStartSignal(){
         startsignal = !startsignal;
+    }
+
+    void setFinishedSignal() {
+        gameFinished = true;
     }
     
     void setGameTime(int g){
