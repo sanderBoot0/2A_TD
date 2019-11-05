@@ -24,12 +24,9 @@ AUTHORS:
 
 #include "../headers/run_game.hpp"
 
-#include "../headers/gamerules.hpp"
-
 #include "../headers/button.hpp"
 
 #include "../headers/note_player_gpio.hpp"
-#include "../headers/rtttl_player.hpp"
 
 #include "../headers/score.hpp"
 
@@ -41,63 +38,22 @@ AUTHORS:
 #include "rtos.hpp"
 
 int main(){
-        
-// receiver tester main  ==============================================
     namespace target = hwlib::target;
-
-// // Ir-Receiver pins
-    auto data = target::pin_in(target::pins::d8);
-    auto gnd  = target::pin_out(target::pins::d10);
-    auto vcc  = target::pin_out(target::pins::d9);
-
-// Display I2C pins
-    auto scl = target::pin_oc( target::pins::scl );
-    auto sda = target::pin_oc( target::pins::sda );
-    auto i2c_bus = hwlib::i2c_bus_bit_banged_scl_sda( scl,sda );
-
-// Declaration of Display and font for displayController class
-    auto oled = hwlib::glcd_oled( i2c_bus, 0x3c ); 
-    auto font = hwlib::font_default_16x16();
-
-// reciever tester main ================================================
-
-// keypad Pins
-    auto out0 = target::pin_oc( target::pins::a0 );
-    auto out1 = target::pin_oc( target::pins::a1 );
-    auto out2 = target::pin_oc( target::pins::a2 );
-    auto out3 = target::pin_oc( target::pins::a3 );
-
-    auto in0  = target::pin_in( target::pins::a4 );
-    auto in1  = target::pin_in( target::pins::a5 );
-    auto in2  = target::pin_in( target::pins::a6 );
-    auto in3  = target::pin_in( target::pins::a7 );
-    
-// pin list of in's and out's for keyboard matrix
-    auto out_port = hwlib::port_oc_from( out0, out1, out2, out3 );
-    auto in_port  = hwlib::port_in_from( in0,  in1,  in2,  in3  );
-    auto matrix = hwlib::matrix_of_switches( out_port, in_port );
-
-    auto button = target::pin_in( target::pins::d6 );
-
-    auto message = "123A456B789C*0#D";
-    auto keypadaanmaak = hwlib::keypad<16>(matrix, message);
-
-    auto receiver = Receiver_controller(data, gnd, vcc);
+        
+    auto receiver = Receiver_controller();
     auto sender = send_controller();
 
-    auto displayCtrl = DisplayController(oled, font);
+    auto displayCtrl = DisplayController();
 
     auto game_par = GameRules();
-
-    auto initGameCtrl = Initgame(sender, displayCtrl);
     auto regGame1 = RegGame(game_par, displayCtrl);
-    auto keypad = Keypadclass(keypadaanmaak);
+    auto initGameCtrl = Initgame(sender, displayCtrl);
 
-    auto beeper_pin = target::pin_out( target::pins::d7 );
-    auto p = note_player_gpio( beeper_pin );
+    auto keypad = Keypadclass();
+    
+    auto beeper = Beeper();
 
-    auto beeper = Beeper(p);
-
+    auto button = target::pin_in( target::pins::d6 );
     auto buttonCtrl = Button(button);
 
     auto score_hit_entity = score();
@@ -106,33 +62,31 @@ int main(){
 
     auto runCtrl = Rungame(sender, game_par, beeper, displayCtrl, score_hit_entity, transferHitsCtrl);
 
-
     // Listeners
 
     keypad.addListener(&initGameCtrl);
     keypad.addListener(&regGame1);
 
     buttonCtrl.addListener(&runCtrl);
+
     receiver.addListener(&runCtrl);
     receiver.addListener(&regGame1);
 
     // Voids to cancel the unused errors because of RTOS
 
-    (void) initGameCtrl;
 
-    (void) keypad;
-    (void) regGame1;
-    
-    (void) displayCtrl;
     (void) receiver;
-    
     (void) sender;
 
-    (void) runCtrl;
-
     (void) buttonCtrl;
-
     (void) beeper;
+    (void) displayCtrl;
+    (void) keypad;
+
+    (void) initGameCtrl;
+    (void) regGame1;
+    
+    (void) runCtrl;
 
     (void) transferHitsCtrl;
     

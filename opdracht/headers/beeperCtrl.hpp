@@ -1,8 +1,17 @@
+/**
+ * @file beeperCtrl.hpp
+ * @brief this object will control all the sounds that needs to be played 
+ * 
+ */
+
 #ifndef BEEPERCTRL_HPP
 #define BEEPERCTRL_HPP
 
 #include "note_player_gpio.hpp"
+#include "hwlib.hpp"
 
+/// @brief This class controls the beeper
+/// @details This class waits for flags that are set by the RunGame class. When a flag is set, the Beeper control will play the right sound.
 class Beeper : public rtos::task<> {
 private:
     rtos::flag countdown_flag;
@@ -10,7 +19,9 @@ private:
     rtos::flag shoot_flag;
     rtos::flag hit_flag;
     rtos::flag finished_flag;
-    note_player_gpio &p;
+    
+    hwlib::target::pin_out beeper_pin = hwlib::target::pin_out( hwlib::target::pins::d7 );
+    note_player_gpio p = note_player_gpio( beeper_pin );
 
     void main() {
         for(;;) {
@@ -33,21 +44,20 @@ private:
                 p.play( note{ note::F5, note::dQ } );
                 p.play( note{ note::G5, note::dQ } );
                 p.play( note{ note::A5, note::dQ } );
-                p.play( note{ note::B5, note::dQ } );
+                p.play( note{ note::B5, note::dH } );
             }
             hwlib::wait_ms(1000);
         }
     }
 
 public: 
-    Beeper(note_player_gpio &player) :
+    Beeper() :
         task(5, "Beep task"),
         countdown_flag(this, "countdown beep flag"),
         start_flag(this, "start beep flag"),
         shoot_flag(this, "shoot beep flag"),
         hit_flag(this, "hit beep flag"),
-        finished_flag(this, "finished beep flag"),
-        p( player )
+        finished_flag(this, "finished beep flag")
     {}
 
     void countdown() {

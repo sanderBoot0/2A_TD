@@ -48,10 +48,6 @@ class Rungame : public rtos::task<>, public MsgListener, public Buttonlistener {
 
     void shoot(uint8_t playername, uint8_t weapontype);
 
-    void write(uint16_t msg) override {
-        messages.write(msg);
-    }
-
    public:
 
     Rungame(send_controller &send_channel, 
@@ -73,6 +69,10 @@ class Rungame : public rtos::task<>, public MsgListener, public Buttonlistener {
         score_hit_entity( scores ),
         transferHitCtrl( transferHitCtrl )
     {}
+
+    void write(uint16_t msg) override {
+        messages.write(msg);
+    }
 
     void buttonPressed() override {
         button_pressed_flag.set();

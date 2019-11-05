@@ -14,4 +14,4 @@ public:
    virtual void play( const note & n ) = 0;
 };
 
-# endif
+#endif

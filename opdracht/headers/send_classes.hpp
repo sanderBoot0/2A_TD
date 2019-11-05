@@ -3,19 +3,33 @@
 
 #include "hwlib.hpp"
 #include "rtos.hpp"
-
+/**
+ * @brief Class that sends all the messages
+ * 
+ */
 class ir_sender {
    private:
     hwlib::target::d2_36kHz send_pin;
 
-   public:
+    /**
+     * @brief Sends a single bit with IR LED
+     * 
+     * @param bit The bit that will be sent
+     */
     void send_bit(const bool bit);
-
-    void set_zero() { send_pin.write(0); }
-
+    
+   public:
+   /**
+    * @brief Sends all the messages using send_bit()
+    * 
+    * @param compiled_message The message to be sent with IR
+    */
     void send_message(char16_t compiled_message);
 };
-
+/**
+ * @brief send controller class. this is a Rtos task that has a message channel that recieves messages from the Rungame & InitGame classes 
+ * 
+ */
 class send_controller : public rtos::task<> {
    private:
     ir_sender ir_send;
@@ -28,11 +42,13 @@ class send_controller : public rtos::task<> {
             send_full_message();
         }
     }
-
+    /**
+     * @brief Reads the messages_channel and sends those messages
+     * 
+     */
     void send_full_message() {
         auto message = messages_channel.read();
         ir_send.send_message(message);
-        // hwlib::cout  << hwlib::bin << message << '\n';
     }
 
    public:
@@ -42,6 +58,11 @@ class send_controller : public rtos::task<> {
         messages_channel(this, "messages_channel") 
     {}
 
+    /**
+     * @brief Writes a value into the messages_channel. To be used with a listener
+     * 
+     * @param value The value to be writed into the channel
+     */
     void write(char16_t value) { messages_channel.write(value); }
 };
 

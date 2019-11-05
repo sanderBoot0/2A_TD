@@ -1,3 +1,8 @@
+/**
+ * @file reg_game.hpp
+ * @brief This file contains the declaration of the RegGame class and its functions, see the cpp file for the definiton of the functions
+ * 
+ */
 #ifndef REGGAME_HPP
 #define REGGAME_HPP
 
@@ -30,15 +35,6 @@ class RegGame : public rtos::task<>, public MsgListener, public KeypadListener {
         display( display ),
         g(g)
     {}
-
-
-
-   
-/*
-overrided function for channels
-
-
-*/
 
     void write(const char k) override { 
         keypadchannel.write(k); 
