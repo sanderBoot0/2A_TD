@@ -1,71 +1,116 @@
 #include "../headers/run_game.hpp"
 
 void Rungame::main() {
+    enum states {
+        CHANGE_GAME_TIME,
+        MSG_RECV,
+        SHOOTING,
+        SHOOTING_AVAILABLE,
+        GAME_OVER
+    };
+    states state;
 
-    enum states {IDLE, CHANGE_GAME_TIME, MSG_RECV, SHOOTING, SHOOTING_AVAILABLE};
-    states state = states::IDLE;
+    while (!game_par.getStartSignal()) {
+        hwlib::wait_ms(1000);
+    }
+    display.clearScreen();
 
-    // while(!game_par.getStartSignal()) {
-    //     hwlib::wait_ms(1000);
-    // }
-
-    hwlib::cout << 3 << '\n';
     beeper.countdown();
     hwlib::wait_ms(1000);
-    hwlib::cout << 2 << '\n';
+
     beeper.countdown();
     hwlib::wait_ms(1000);
-    hwlib::cout << 1 << '\n';
+    
     beeper.countdown();
     hwlib::wait_ms(1000);
-    hwlib::cout << "Go\n";
+
+    display.writeCmdPool("\n   Go");
+    //hwlib::cout << "Go\n";
     beeper.start();
 
     for(;;) {
-        auto wait_event = wait(button_pressed_flag + second_clock + shoot_timer + messages);
+        if (state != states::GAME_OVER) {
+            auto wait_event = wait(button_pressed_flag + second_clock +
+                                   shoot_timer + messages);
 
-        if(wait_event == second_clock) {
-            state = states::CHANGE_GAME_TIME;
-        } else if(wait_event == shoot_timer) {
-            state = states::SHOOTING_AVAILABLE;
-        } else if(wait_event == button_pressed_flag) {
-            state = states::SHOOTING;
-        } else if(wait_event == messages){
-            state = states::MSG_RECV;
-        } else {
-            hwlib::cout << "d\n";
-        }
-        
-        switch(state) {
-            case states::IDLE: {
-                break;
+            if (wait_event == second_clock) {
+                state = states::CHANGE_GAME_TIME;
+            } else if (wait_event == shoot_timer) {
+                state = states::SHOOTING_AVAILABLE;
+            } else if (wait_event == button_pressed_flag) {
+                state = states::SHOOTING;
+            } else if (wait_event == messages) {
+                state = states::MSG_RECV;
+            } else {
+                state = states::GAME_OVER;
             }
+        }
+
+        switch (state) {
             case states::CHANGE_GAME_TIME: {
-                // auto seconds = game_par.getGameTime();
-                hwlib::cout << "tijd\n";
+                // hwlib::cout << "Tijd\n";
+                auto seconds = game_par.getGameTime();
+                hwlib::cout << seconds << '\n';
+                if (seconds <= 0) {
+                    // hwlib::cout << "seconds 0\n";
+                    state = states::GAME_OVER;
+                    break;
+                }
+                game_par.setGameTime(--seconds);
+                auto score = score_hit_entity.getScore();
+                display.writeGameInfoPool(seconds, score);
+
                 break;
             }
             case states::MSG_RECV: {
-                hwlib::cout << "massage\n";
+                // hwlib::cout << "message\n";
+
+                auto m = messages.read();
+
+                uint8_t playerData = (m & 0b0111110000000000) >> 10;
+                uint8_t weaponType = (m & 0b0000001111100000) >> 5;
+
+                if (playerData == 0) {
+                    break;
+                }
+
+                score_hit_entity.addHit(playerData, weaponType);
+
+                int seconds = game_par.getGameTime();
+                int score = score_hit_entity.getScore();
+
+                beeper.hit();
+
+                if (score <= 0) {
+                    // hwlib::cout << "Score 0\n";
+                    state = states::GAME_OVER;
+                }
+                display.writeGameInfoPool(seconds, score);
                 break;
             }
             case states::SHOOTING_AVAILABLE: {
                 shoot_available = true;
-                hwlib::cout << "shoot available\n";
                 break;
             }
             case states::SHOOTING: {
-                if(shoot_available) {
-                    hwlib::cout << "Shoot\n";
-
+                if (shoot_available) {
                     uint8_t playernumber = game_par.getPlayerNumber();
                     uint8_t weapontype = game_par.getFirepower();
 
                     shoot(playernumber, weapontype);
+                    beeper.shoot();
 
-                    shoot_timer.set(2'000'000);
+                    shoot_timer.set(weapontype * 500'000);
                     shoot_available = false;
                 }
+                break;
+            }
+            case states::GAME_OVER: {
+                beeper.finished();
+                game_par.setFinishedSignal();
+                hwlib::wait_ms(1'000);
+                display.writeCmdPool("\n  Game\n  Over!");
+                hwlib::wait_ms(1'000'000'000);
             }
         }
     }

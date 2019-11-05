@@ -32,7 +32,11 @@ AUTHORS:
 #include "../headers/note_player_gpio.hpp"
 #include "../headers/rtttl_player.hpp"
 
+#include "../headers/score.hpp"
+
 #include "../headers/beeperCtrl.hpp"
+
+#include "../headers/transferHits.hpp"
 
 #include "hwlib.hpp"
 #include "rtos.hpp"
@@ -69,7 +73,7 @@ int main(){
     auto in2  = target::pin_in( target::pins::a6 );
     auto in3  = target::pin_in( target::pins::a7 );
     
-// pin list of in's and out's
+// pin list of in's and out's for keyboard matrix
     auto out_port = hwlib::port_oc_from( out0, out1, out2, out3 );
     auto in_port  = hwlib::port_in_from( in0,  in1,  in2,  in3  );
     auto matrix = hwlib::matrix_of_switches( out_port, in_port );
@@ -79,13 +83,15 @@ int main(){
     auto message = "123A456B789C*0#D";
     auto keypadaanmaak = hwlib::keypad<16>(matrix, message);
 
+    auto receiver = Receiver_controller(data, gnd, vcc);
+    auto sender = send_controller();
 
     auto displayCtrl = DisplayController(oled, font);
 
-    auto sender = send_controller();
+    auto game_par = GameRules();
 
     auto initGameCtrl = Initgame(sender, displayCtrl);
-    auto regGame1 = RegGame();
+    auto regGame1 = RegGame(game_par, displayCtrl);
     auto keypad = Keypadclass(keypadaanmaak, regGame1, initGameCtrl);
 
     auto beeper_pin = target::pin_out( target::pins::d7 );
@@ -93,30 +99,29 @@ int main(){
 
     auto beeper = Beeper(beeper_pin, p);
 
-    auto game_par = GameRules();
-
-    auto regGame1 = RegGame(game_par);
-    auto keypad = Keypadclass(keypadaanmaak, regGame1);
-
     auto buttonCtrl = Button(button);
 
-    auto receiver = Receiver_controller(data, gnd, vcc/*, printer*/);
-    auto sender = send_controller();
+    auto score_hit_entity = score();
 
-    // auto tijd = time(11, 11);
-    // auto displayCtrl = displayController(oled, font);
 
-    auto runCtrl = Rungame(sender, game_par, beeper);
+    auto runCtrl = Rungame(sender, game_par, beeper, displayCtrl, score_hit_entity);
 
-    (void) initGameCtrl;
+    auto transferHitsCtrl = TransferHits(game_par, score_hit_entity);
+
+    // Listeners
+
     buttonCtrl.addListener(&runCtrl);
     receiver.addListener(&runCtrl);
+    receiver.addListener(&regGame1);
 
+    // Voids to cancel the unused errors because of RTOS
+
+    (void) initGameCtrl;
 
     (void) keypad;
     (void) regGame1;
     
-    // (void) displayCtrl;
+    (void) displayCtrl;
     (void) receiver;
     
     (void) sender;
@@ -126,6 +131,8 @@ int main(){
     (void) buttonCtrl;
 
     (void) beeper;
+
+    (void) transferHitsCtrl;
     
     // wait for the PC console to start
     hwlib::wait_ms( 500 );

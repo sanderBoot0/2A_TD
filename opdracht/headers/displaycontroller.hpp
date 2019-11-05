@@ -40,7 +40,7 @@ class DisplayController : public rtos::task<> {
 
    public:
     DisplayController(hwlib::glcd_oled &oled, hwlib::font_default_16x16 &font)
-        : task(9, "DisplayController"),
+        : task(8, "DisplayController"),
           commandpool("commandpool"),
           commandflag(this, "commandflag"),
           gameinfopool("gameinfopool"),
