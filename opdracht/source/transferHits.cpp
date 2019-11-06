@@ -1,3 +1,8 @@
+/**
+ * @file transferHits.cpp
+ * @brief The source file of the transferHits class which contains the defined functions
+ */
+
 #include "../headers/transferHits.hpp"
 
 void TransferHits::main(){
@@ -6,12 +11,16 @@ void TransferHits::main(){
 
     for(;;) {
         switch(state) {
+
+            // Wait for the gamover flag to be set, then the game has finished.
             case states::WAIT_FOR_ENDING: {
                 wait(gameOver);
                 state = states::WAIT_FOR_USB;
 
                 break;
             }
+
+            // Wait for the person to press D on the computer
             case states::WAIT_FOR_USB: {
                 hwlib::cout << "Press 'D', to start transfer";
                 char input;
@@ -22,6 +31,8 @@ void TransferHits::main(){
                 }
                 break;
             }
+
+            // Get all the hits, and cout them. Then go back to the beginning.
             case states::TRANSFERING: {
                 int health = 100;
                 for(int i = 0;; i++) {

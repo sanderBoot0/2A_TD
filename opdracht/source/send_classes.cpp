@@ -1,3 +1,8 @@
+/**
+ * @file send_classes.cpp
+ * @brief The source file of the send_classes class which contains the defined functions
+ */
+
 #include "../headers/send_classes.hpp"
 
 void ir_sender::send_bit(const bool bit) {

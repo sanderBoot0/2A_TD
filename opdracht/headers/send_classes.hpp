@@ -1,3 +1,8 @@
+/**
+ * @file send_classes.hpp
+ * @brief This file contains the declaration of the send_classes class and its functions
+ */
+
 #ifndef SEND_CLASSES_HPP
 #define SEND_CLASSES_HPP
 
@@ -27,7 +32,7 @@ class ir_sender {
     void send_message(char16_t compiled_message);
 };
 /**
- * @brief send controller class. this is a Rtos task that has a message channel that recieves messages from the Rungame & InitGame classes 
+ * @brief Send controller class. This is a Rtos task that has a message channel that recieves messages from the Rungame & InitGame classes 
  * 
  */
 class send_controller : public rtos::task<> {
@@ -37,9 +42,9 @@ class send_controller : public rtos::task<> {
 
     void main() {
         while (1) {
-            wait(messages_channel);
-            hwlib::wait_ms(1000);
-            send_full_message();
+            wait(messages_channel);         // waits for a message in the channel
+            //hwlib::wait_ms(1000);           //
+            send_full_message();    
         }
     }
     /**
@@ -54,7 +59,6 @@ class send_controller : public rtos::task<> {
    public:
     send_controller(): 
         task(2, "send_task"),
-        //ir_send(),
         messages_channel(this, "messages_channel") 
     {}
 

@@ -1,3 +1,9 @@
+/**
+ * @file note_player_gpio.cpp
+ * @brief This file has been taken from the v2cpse1 repository so that the beeper will work 
+ * @ref https://github.com/wovo/v2cpse1-examples/tree/master/practicum-ringtone
+ */
+
 #include "hwlib.hpp"
 #include "../headers/note_player_gpio.hpp"
 

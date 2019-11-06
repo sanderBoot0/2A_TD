@@ -1,3 +1,9 @@
+/**
+ * @file main.cpp 
+ * @brief the main file 
+ * 
+ */
+
 /*
 
 PROJECT Themaopdracht DEVICES (2A_TD)
@@ -39,18 +45,25 @@ AUTHORS:
 
 int main(){
     namespace target = hwlib::target;
-        
+    
+    //Declare IR Receiver 
     auto receiver = Receiver_controller();
+
+    //Declare IR Sender 
     auto sender = send_controller();
 
+    //Declare Display 
     auto displayCtrl = DisplayController();
 
+    //Declare Control Objects en entities 
     auto game_par = GameRules();
     auto regGame1 = RegGame(game_par, displayCtrl);
     auto initGameCtrl = Initgame(sender, displayCtrl);
 
+    //Declare Keypad 
     auto keypad = Keypadclass();
     
+    //Declare Speaker 
     auto beeper = Beeper();
 
     auto button = target::pin_in( target::pins::d6 );
@@ -62,7 +75,7 @@ int main(){
 
     auto runCtrl = Rungame(sender, game_par, beeper, displayCtrl, score_hit_entity, transferHitsCtrl);
 
-    // Listeners
+    //Declare Listeners
 
     keypad.addListener(&initGameCtrl);
     keypad.addListener(&regGame1);
@@ -93,6 +106,7 @@ int main(){
     // wait for the PC console to start
     hwlib::wait_ms( 500 );
 
+    //run all task 
     rtos::run();
     
 }

@@ -28,7 +28,8 @@ void Initgame::main() {
                 char temp = keypadchannel.read();
 
                 if (temp >= '0' && temp <= '9' &&
-                    (time * 10) < 255 - (temp - 48)) { //to check if time doesn't exceed 8 bit unsigned int
+                    (time * 10) < (255 - (temp - 48) ) ) { //to check if time doesn't exceed 8 bit unsigned int
+
                     time = (time * 10) + (temp - 48);
 
                     display.addChar(temp);
@@ -68,7 +69,6 @@ void Initgame::main() {
             case SetStartSignal: {                      // this state is used to send the start signal everytime '*' is pressed
                 display.writeCmdPool("Press *\nTo send\nStart\ncmd");
                 msg = 0 | (1 << 15);
-                send_channel.write(msg);
 
                 wait(keypadchannel);
                 if (keypadchannel.read() == '*') {

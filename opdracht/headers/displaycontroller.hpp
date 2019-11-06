@@ -26,7 +26,7 @@ struct gameinfo {
 };
 
 /**
- * @brief DisplayController Class used for displaying varius comamnds and game
+ * @brief DisplayController Class used for displaying varius commands and game
  * info
  *
  */

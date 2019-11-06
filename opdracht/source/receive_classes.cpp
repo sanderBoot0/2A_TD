@@ -1,3 +1,8 @@
+/**
+ * @file receive_classes.cpp
+ * @brief source file of the receive_classes class where the functions are defined 
+ */
+
 #include "../headers/receive_classes.hpp"
 
 #include "hwlib.hpp"
@@ -13,11 +18,11 @@ void Receiver_controller::main(){
     int position = 0;
 
     for(;;) {
-        switch(state) {
+        switch(state) { // check for a start bit
             case states::RECEIVING_MESSAGE: {
                 int bit = get_bit();
 
-                if (bit == 2) {
+                if (bit == 2) {         // if there is no start bit go back to the first position in the message array
                     position = 0;
                     break;
                 }
@@ -27,15 +32,15 @@ void Receiver_controller::main(){
                 if(position == 0)   
                     message1[position] = 1;
 
-                position++;
-                if(position == 16) {
+                position++;         
+                if(position == 16) {        // get 16 bits then wait 3 ms for the pause
                     position = 0;
                     state = states::RECEIVING_CONTROL_MESSAGE;
                     hwlib::wait_ms(3);
                 }
                 break;
             }
-            case states::RECEIVING_CONTROL_MESSAGE: {
+            case states::RECEIVING_CONTROL_MESSAGE: {  // same as previous state butt for the coontrol message
                 int bit = get_bit();
 
                 if(bit == 2) {
@@ -52,28 +57,24 @@ void Receiver_controller::main(){
                 position++;
                 if(position == 16) {
                     position = 0;
-                    if(!check_equal(message1, message2)) {
+                    if(!check_equal(message1, message2)) {  // check if message 1 and message2 are equal; this means the received data is correct
                         state = states::RECEIVING_MESSAGE;
                     }
                     state = states::DECODING_MESSAGE;
                 }
                 break;
             }
-            case states::DECODING_MESSAGE: {
+            case states::DECODING_MESSAGE: {  // decode message1
                 uint16_t message = 0;
-                for(int i = 0; i < 16; i++ ) {
+                for(int i = 0; i < 16; i++ ) { // make a uint16_t from the message1[] array
                     message <<= 1;
                     message |= message1[i];
                 }
-                if(check(message)) {
-                    // hwlib::cout << ' '<< hwlib::bin << message << '\r';
-                    // printer.write(message);
+                if(check(message)) { // check if the controlbits are correct
                     for(int i = 0; i < n_listeners; i++) {
-                        listeners[i]->write(message);
+                        listeners[i]->write(message); // write the message naar alle listeners
                     }
                     
-                } else {
-                    // hwlib::cout << '\n' << ' ' << message << '\n';
                 }
                 state = states::RECEIVING_MESSAGE;
                 break;

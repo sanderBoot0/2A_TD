@@ -1,3 +1,8 @@
+/**
+ * @file run_game.cpp
+ * @brief The source file of the RunGame class which contains the defined functions
+ */
+
 #include "../headers/run_game.hpp"
 
 void Rungame::main() {
@@ -7,16 +12,17 @@ void Rungame::main() {
         MSG_RECV,
         SHOOTING,
         SHOOTING_AVAILABLE,
-        GAME_OVER
+        GAME_OVER,
+        IDLE
     };
-    states state;
+    states state = states::IDLE;
 
-    while (!game_par.getStartSignal()) {
+    while (!game_par.getStartSignal()) { // waiting for StartSignal
         hwlib::wait_ms(1000);
     }
     display.clearScreen();
 
-    beeper.countdown();
+    beeper.countdown();                 // play countdown sound 3 times
     hwlib::wait_ms(1000);
 
     beeper.countdown();
@@ -25,51 +31,52 @@ void Rungame::main() {
     beeper.countdown();
     hwlib::wait_ms(1000);
 
-    display.writeCmdPool("\n   Go");
-    //hwlib::cout << "Go\n";
+    display.writeCmdPool("\n   Go");    // write Go to display
     beeper.start();
 
     for(;;) {
-        if (state != states::GAME_OVER) {
-            auto wait_event = wait(button_pressed_flag + hit_timer + second_clock +
+        switch (state) {
+            case states::IDLE: {
+                auto wait_event = wait(button_pressed_flag + hit_timer + second_clock + // if onne of these events triggers go to that state
                                    shoot_timer + messages);
 
-            if (wait_event == second_clock) {
-                state = states::CHANGE_GAME_TIME;
-            } else if (wait_event == shoot_timer) {
-                state = states::SHOOTING_AVAILABLE;
-            } else if (wait_event == button_pressed_flag) {
-                state = states::SHOOTING;
-            } else if (wait_event == messages) {
-                state = states::MSG_RECV;
-            } else if (wait_event == hit_timer) {
-                state = states::HIT_AVAILABLE;
-            } else {
-                state = states::GAME_OVER;
-            }
-        }
+                if (wait_event == second_clock) {
+                    state = states::CHANGE_GAME_TIME;
+                } else if (wait_event == shoot_timer) {
+                    state = states::SHOOTING_AVAILABLE;
+                } else if (wait_event == button_pressed_flag) {
+                    state = states::SHOOTING;
+                } else if (wait_event == messages) {
+                    state = states::MSG_RECV;
+                } else if (wait_event == hit_timer) {
+                    state = states::HIT_AVAILABLE;
+                } else {
+                    state = states::GAME_OVER;
+                }
 
-        switch (state) {
-            case states::CHANGE_GAME_TIME: {
-                // hwlib::cout << "Tijd\n";
+                break;
+            }
+            case states::CHANGE_GAME_TIME: {                // this state prints the time on the display unless it's 0  then go to GAME_OVER
                 auto seconds = game_par.getGameTime();
 
                 if (seconds <= 0) {
-                    // hwlib::cout << "seconds 0\n";
                     state = states::GAME_OVER;
                     break;
                 }
-                game_par.setGameTime(--seconds);
+                game_par.setGameTime(--seconds);            // lower the remaining game time by 1 second
                 auto score = score_hit_entity.getScore();
-                display.writeGameInfoPool(seconds, score);
+                display.writeGameInfoPool(seconds, score);  // display game time and score
 
+                state = states::IDLE;
                 break;
             }
-            case states::HIT_AVAILABLE: {
+            case states::HIT_AVAILABLE: {                    // when the hit timer is done you will be able to get hit again
                 can_be_hit = true;
+
+                state = states::IDLE;
                 break;
             }
-            case states::MSG_RECV: {
+            case states::MSG_RECV: {                         // when hit store data of enemy player and take the dmg for the amount hit
                 auto m = messages.read();
 
                 if(can_be_hit) {
@@ -77,6 +84,7 @@ void Rungame::main() {
                     uint8_t weaponType = (m & 0b0000001111100000) >> 5;
 
                     if (playerData == 0 || playerData == game_par.getPlayerNumber()) {
+                        state = states::IDLE;
                         break;
                     }
 
@@ -87,7 +95,7 @@ void Rungame::main() {
 
                     beeper.hit();
 
-                    can_be_hit = false;
+                    can_be_hit = false;         // when hit get a cooldown before you can be hit again
                     hit_timer.set(100'000);
 
                     if (score <= 0) {
@@ -95,26 +103,31 @@ void Rungame::main() {
                         state = states::GAME_OVER;
                     }   
 
-                    display.writeGameInfoPool(seconds, score);
+                    display.writeGameInfoPool(seconds, score);  //  when hit update time and score on screen
                 }
 
+                state = states::IDLE;
                 break;
             }
-            case states::SHOOTING_AVAILABLE: {
+            case states::SHOOTING_AVAILABLE: {                 // allows the player to shoot once the  shoot_timer is over
                 shoot_available = true;
+
+                state = states::IDLE;
                 break;
             }
-            case states::SHOOTING: {
+            case states::SHOOTING: {                           // this state allows the player to shoot
                 if (shoot_available) {
                     uint8_t playernumber = game_par.getPlayerNumber();
                     uint8_t weapontype = game_par.getFirepower();
 
-                    shoot(playernumber, weapontype);
+                    shoot(playernumber, weapontype);           // shoot and play shoot sound
                     beeper.shoot();
 
-                    shoot_timer.set(weapontype * 500'000);
+                    shoot_timer.set(weapontype * 500'000);     // shoot_timer = weapon dmg * half_a_sec
                     shoot_available = false;
                 }
+
+                state = states::IDLE;
                 break;
             }
             case states::GAME_OVER: {

@@ -12,7 +12,10 @@
 #include "send_classes.hpp"
 #include "displaycontroller.hpp"
 #include "keypadlistener.hpp"
-
+/**
+ * @brief This class manages the Game leader commands and actions
+ * 
+ */
 class Initgame : public rtos::task<>, public KeypadListener {
    private:
     rtos::channel<char, 16> keypadchannel;
