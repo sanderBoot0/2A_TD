@@ -1,0 +1,119 @@
+\hypertarget{class_rungame}{}\doxysection{Rungame Class Reference}
+\label{class_rungame}\index{Rungame@{Rungame}}
+
+
+This class is used to control the state of the game when running.  
+
+
+
+
+{\ttfamily \#include $<$run\+\_\+game.\+hpp$>$}
+
+Inheritance diagram for Rungame\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_rungame}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_rungame_ad80562229e98a2841af44d733e53d3b1}{Rungame}} (\mbox{\hyperlink{classsend__controller}{send\+\_\+controller}} \&send\+\_\+channel, \mbox{\hyperlink{class_game_rules}{Game\+Rules}} \&game\+\_\+par, \mbox{\hyperlink{class_beeper}{Beeper}} \&p\+\_\+beeper, \mbox{\hyperlink{class_display_controller}{Display\+Controller}} \&p\+\_\+display, \mbox{\hyperlink{classscore}{score}} \&scores, \mbox{\hyperlink{class_transfer_hits}{Transfer\+Hits}} \&transfer\+Hit\+Ctrl)
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{class_rungame}{Rungame}} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_rungame_a8161e0d431aa471eecac9550fbbb4885}{write}} (uint16\+\_\+t msg) override
+\begin{DoxyCompactList}\small\item\em writes the msg into the message chhannel \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_rungame_a3ea31e84eb82248cb391c5995464f042}{button\+Pressed}} () override
+\begin{DoxyCompactList}\small\item\em sets the button\+\_\+pressed\+\_\+flag when button is pressed \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class is used to control the state of the game when running. 
+
+
+
+Definition at line 31 of file run\+\_\+game.\+hpp.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_rungame_ad80562229e98a2841af44d733e53d3b1}\label{class_rungame_ad80562229e98a2841af44d733e53d3b1}} 
+\index{Rungame@{Rungame}!Rungame@{Rungame}}
+\index{Rungame@{Rungame}!Rungame@{Rungame}}
+\doxysubsubsection{\texorpdfstring{Rungame()}{Rungame()}}
+{\footnotesize\ttfamily Rungame\+::\+Rungame (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classsend__controller}{send\+\_\+controller}} \&}]{send\+\_\+channel,  }\item[{\mbox{\hyperlink{class_game_rules}{Game\+Rules}} \&}]{game\+\_\+par,  }\item[{\mbox{\hyperlink{class_beeper}{Beeper}} \&}]{p\+\_\+beeper,  }\item[{\mbox{\hyperlink{class_display_controller}{Display\+Controller}} \&}]{p\+\_\+display,  }\item[{\mbox{\hyperlink{classscore}{score}} \&}]{scores,  }\item[{\mbox{\hyperlink{class_transfer_hits}{Transfer\+Hits}} \&}]{transfer\+Hit\+Ctrl }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct a new \mbox{\hyperlink{class_rungame}{Rungame}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em send\+\_\+channel} & The channel of the IR sender \\
+\hline
+{\em game\+\_\+par} & The game parameters \\
+\hline
+{\em p\+\_\+beeper} & ~\newline
+ \\
+\hline
+{\em p\+\_\+display} & ~\newline
+ \\
+\hline
+{\em scores} & The class which stores the score of players who have shot you \\
+\hline
+{\em transfer\+Hit\+Ctrl} & The class which sends the score via usb to the host pc \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 76 of file run\+\_\+game.\+hpp.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_rungame_a3ea31e84eb82248cb391c5995464f042}\label{class_rungame_a3ea31e84eb82248cb391c5995464f042}} 
+\index{Rungame@{Rungame}!buttonPressed@{buttonPressed}}
+\index{buttonPressed@{buttonPressed}!Rungame@{Rungame}}
+\doxysubsubsection{\texorpdfstring{buttonPressed()}{buttonPressed()}}
+{\footnotesize\ttfamily void Rungame\+::button\+Pressed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+sets the button\+\_\+pressed\+\_\+flag when button is pressed 
+
+
+
+Implements \mbox{\hyperlink{class_buttonlistener}{Buttonlistener}}.
+
+
+
+Definition at line 109 of file run\+\_\+game.\+hpp.
+
+\mbox{\Hypertarget{class_rungame_a8161e0d431aa471eecac9550fbbb4885}\label{class_rungame_a8161e0d431aa471eecac9550fbbb4885}} 
+\index{Rungame@{Rungame}!write@{write}}
+\index{write@{write}!Rungame@{Rungame}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily void Rungame\+::write (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{msg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+writes the msg into the message chhannel 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & the 16 bit message you want to write to the channel \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_msg_listener_a074f77a85399910c6ed1bbc4af9cb9c7}{Msg\+Listener}}.
+
+
+
+Definition at line 101 of file run\+\_\+game.\+hpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+opdracht/headers/\mbox{\hyperlink{run__game_8hpp}{run\+\_\+game.\+hpp}}\item 
+opdracht/source/\mbox{\hyperlink{run__game_8cpp}{run\+\_\+game.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,135 @@
+\hypertarget{class_display_controller}{}\doxysection{Display\+Controller Class Reference}
+\label{class_display_controller}\index{DisplayController@{DisplayController}}
+
+
+\mbox{\hyperlink{class_display_controller}{Display\+Controller}} Class used for displaying varius commands and game info.  
+
+
+
+
+{\ttfamily \#include $<$displaycontroller.\+hpp$>$}
+
+Inheritance diagram for Display\+Controller\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_display_controller}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_display_controller_afce5b449cb2fb98b0c5c3c80df38a315}{add\+Char}} (const char)
+\begin{DoxyCompactList}\small\item\em This function writes the given character on the current position of the screen and flushes. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_display_controller_aa2fd215e6f7b29689d0a6b21a97e4348}{flush\+Screen}} ()
+\begin{DoxyCompactList}\small\item\em ths function flushes the screen with hwlib\+::flush \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_display_controller_a25f8156833eba94454de2e51b85f8116}{clear\+Screen}} ()
+\begin{DoxyCompactList}\small\item\em this function clears the screen completely by writing the escape character \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_display_controller_a5267a2360e4452ab15a0c6fce5c11e10}{write\+Cmd\+Pool}} (const char $\ast$cmd)
+\begin{DoxyCompactList}\small\item\em function that writes a const char$\ast$ string to the command\+Pool to be displayed on the screen via showcommand() \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_display_controller_a7204bac030e62300502d8d77521ea718}{write\+Game\+Info\+Pool}} (int seconds, int \mbox{\hyperlink{classscore}{score}})
+\begin{DoxyCompactList}\small\item\em function that puts the variables in a struct and writes that struct in a pool of that struct type for it to be displayed via the Show\+Game\+Info() function \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_display_controller}{Display\+Controller}} Class used for displaying varius commands and game info. 
+
+
+
+Definition at line 33 of file displaycontroller.\+hpp.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_display_controller_afce5b449cb2fb98b0c5c3c80df38a315}\label{class_display_controller_afce5b449cb2fb98b0c5c3c80df38a315}} 
+\index{DisplayController@{DisplayController}!addChar@{addChar}}
+\index{addChar@{addChar}!DisplayController@{DisplayController}}
+\doxysubsubsection{\texorpdfstring{addChar()}{addChar()}}
+{\footnotesize\ttfamily void Display\+Controller\+::add\+Char (\begin{DoxyParamCaption}\item[{const char}]{c }\end{DoxyParamCaption})}
+
+
+
+This function writes the given character on the current position of the screen and flushes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 40 of file displaycontroller.\+cpp.
+
+\mbox{\Hypertarget{class_display_controller_a25f8156833eba94454de2e51b85f8116}\label{class_display_controller_a25f8156833eba94454de2e51b85f8116}} 
+\index{DisplayController@{DisplayController}!clearScreen@{clearScreen}}
+\index{clearScreen@{clearScreen}!DisplayController@{DisplayController}}
+\doxysubsubsection{\texorpdfstring{clearScreen()}{clearScreen()}}
+{\footnotesize\ttfamily void Display\+Controller\+::clear\+Screen (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+this function clears the screen completely by writing the escape character 
+
+
+
+Definition at line 47 of file displaycontroller.\+cpp.
+
+\mbox{\Hypertarget{class_display_controller_aa2fd215e6f7b29689d0a6b21a97e4348}\label{class_display_controller_aa2fd215e6f7b29689d0a6b21a97e4348}} 
+\index{DisplayController@{DisplayController}!flushScreen@{flushScreen}}
+\index{flushScreen@{flushScreen}!DisplayController@{DisplayController}}
+\doxysubsubsection{\texorpdfstring{flushScreen()}{flushScreen()}}
+{\footnotesize\ttfamily void Display\+Controller\+::flush\+Screen (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+ths function flushes the screen with hwlib\+::flush 
+
+
+
+Definition at line 45 of file displaycontroller.\+cpp.
+
+\mbox{\Hypertarget{class_display_controller_a5267a2360e4452ab15a0c6fce5c11e10}\label{class_display_controller_a5267a2360e4452ab15a0c6fce5c11e10}} 
+\index{DisplayController@{DisplayController}!writeCmdPool@{writeCmdPool}}
+\index{writeCmdPool@{writeCmdPool}!DisplayController@{DisplayController}}
+\doxysubsubsection{\texorpdfstring{writeCmdPool()}{writeCmdPool()}}
+{\footnotesize\ttfamily void Display\+Controller\+::write\+Cmd\+Pool (\begin{DoxyParamCaption}\item[{const char $\ast$}]{cmd }\end{DoxyParamCaption})}
+
+
+
+function that writes a const char$\ast$ string to the command\+Pool to be displayed on the screen via showcommand() 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cmd} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 52 of file displaycontroller.\+cpp.
+
+\mbox{\Hypertarget{class_display_controller_a7204bac030e62300502d8d77521ea718}\label{class_display_controller_a7204bac030e62300502d8d77521ea718}} 
+\index{DisplayController@{DisplayController}!writeGameInfoPool@{writeGameInfoPool}}
+\index{writeGameInfoPool@{writeGameInfoPool}!DisplayController@{DisplayController}}
+\doxysubsubsection{\texorpdfstring{writeGameInfoPool()}{writeGameInfoPool()}}
+{\footnotesize\ttfamily void Display\+Controller\+::write\+Game\+Info\+Pool (\begin{DoxyParamCaption}\item[{int}]{seconds,  }\item[{int}]{score }\end{DoxyParamCaption})}
+
+
+
+function that puts the variables in a struct and writes that struct in a pool of that struct type for it to be displayed via the Show\+Game\+Info() function 
+
+
+\begin{DoxyParams}{Parameters}
+{\em seconds} & \\
+\hline
+{\em score} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 57 of file displaycontroller.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+opdracht/headers/\mbox{\hyperlink{displaycontroller_8hpp}{displaycontroller.\+hpp}}\item 
+opdracht/source/\mbox{\hyperlink{displaycontroller_8cpp}{displaycontroller.\+cpp}}\end{DoxyCompactItemize}

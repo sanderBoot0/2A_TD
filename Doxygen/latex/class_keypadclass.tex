@@ -1,0 +1,131 @@
+\hypertarget{class_keypadclass}{}\doxysection{Keypadclass Class Reference}
+\label{class_keypadclass}\index{Keypadclass@{Keypadclass}}
+
+
+This class is used to receive all keypad presses.  
+
+
+
+
+{\ttfamily \#include $<$keypadclass.\+hpp$>$}
+
+Inheritance diagram for Keypadclass\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_keypadclass}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_keypadclass_ad233e85fdf962798e73a9ae41b02130c}\label{class_keypadclass_ad233e85fdf962798e73a9ae41b02130c}} 
+void {\bfseries main} ()
+\item 
+\mbox{\hyperlink{class_keypadclass_abfb39ddc0e69d072bb01e835469b7935}{Keypadclass}} ()
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{class_keypadclass}{Keypadclass}} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_keypadclass_a136c8bac933049abd3023e99450bf3e5}{add\+Listener}} (\mbox{\hyperlink{class_keypad_listener}{Keypad\+Listener}} $\ast$k)
+\begin{DoxyCompactList}\small\item\em Adds a listener to the list of listeners. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_keypadclass_a72044ecd4edf67effd579844a9b6eba2}\label{class_keypadclass_a72044ecd4edf67effd579844a9b6eba2}} 
+rtos\+::clock {\bfseries period\+\_\+clock}
+\item 
+\mbox{\Hypertarget{class_keypadclass_a5bfb4d482d943f9f78cb1131cccd2022}\label{class_keypadclass_a5bfb4d482d943f9f78cb1131cccd2022}} 
+\mbox{\hyperlink{class_keypad_listener}{Keypad\+Listener}} $\ast$ {\bfseries listeners} \mbox{[}2\mbox{]}
+\item 
+\mbox{\Hypertarget{class_keypadclass_aa4bf5ace447289eb800b3826c551eca1}\label{class_keypadclass_aa4bf5ace447289eb800b3826c551eca1}} 
+int {\bfseries n\+\_\+listeners} = 0
+\item 
+\mbox{\Hypertarget{class_keypadclass_ac704a89b21965474e23e811d44814074}\label{class_keypadclass_ac704a89b21965474e23e811d44814074}} 
+hwlib\+::target\+::pin\+\_\+oc {\bfseries out0} = hwlib\+::target\+::pin\+\_\+oc( hwlib\+::target\+::pins\+::a0 )
+\item 
+\mbox{\Hypertarget{class_keypadclass_a27617d116c03a9cdec8f4ca17c5a1d28}\label{class_keypadclass_a27617d116c03a9cdec8f4ca17c5a1d28}} 
+hwlib\+::target\+::pin\+\_\+oc {\bfseries out1} = hwlib\+::target\+::pin\+\_\+oc( hwlib\+::target\+::pins\+::a1 )
+\item 
+\mbox{\Hypertarget{class_keypadclass_a8151312be5c6e39653fe5a83f135e806}\label{class_keypadclass_a8151312be5c6e39653fe5a83f135e806}} 
+hwlib\+::target\+::pin\+\_\+oc {\bfseries out2} = hwlib\+::target\+::pin\+\_\+oc( hwlib\+::target\+::pins\+::a2 )
+\item 
+\mbox{\Hypertarget{class_keypadclass_aa1440aaf3c7494d861e31d9f5c45cda3}\label{class_keypadclass_aa1440aaf3c7494d861e31d9f5c45cda3}} 
+hwlib\+::target\+::pin\+\_\+oc {\bfseries out3} = hwlib\+::target\+::pin\+\_\+oc( hwlib\+::target\+::pins\+::a3 )
+\item 
+\mbox{\Hypertarget{class_keypadclass_a3333c16580d8fd6e82441f268badf7d4}\label{class_keypadclass_a3333c16580d8fd6e82441f268badf7d4}} 
+hwlib\+::target\+::pin\+\_\+in {\bfseries in0} = hwlib\+::target\+::pin\+\_\+in( hwlib\+::target\+::pins\+::a4 )
+\item 
+\mbox{\Hypertarget{class_keypadclass_af81de6b25be9b1dca7332f3fe152e711}\label{class_keypadclass_af81de6b25be9b1dca7332f3fe152e711}} 
+hwlib\+::target\+::pin\+\_\+in {\bfseries in1} = hwlib\+::target\+::pin\+\_\+in( hwlib\+::target\+::pins\+::a5 )
+\item 
+\mbox{\Hypertarget{class_keypadclass_a80ef9fa51460a29e9d66e3e23dc4c1b5}\label{class_keypadclass_a80ef9fa51460a29e9d66e3e23dc4c1b5}} 
+hwlib\+::target\+::pin\+\_\+in {\bfseries in2} = hwlib\+::target\+::pin\+\_\+in( hwlib\+::target\+::pins\+::a6 )
+\item 
+\mbox{\Hypertarget{class_keypadclass_a4c594a9decc6d87fe1c3a86324678019}\label{class_keypadclass_a4c594a9decc6d87fe1c3a86324678019}} 
+hwlib\+::target\+::pin\+\_\+in {\bfseries in3} = hwlib\+::target\+::pin\+\_\+in( hwlib\+::target\+::pins\+::a7 )
+\item 
+\mbox{\Hypertarget{class_keypadclass_a06233fb92f710cf50b9ec56858c0803a}\label{class_keypadclass_a06233fb92f710cf50b9ec56858c0803a}} 
+hwlib\+::port\+\_\+oc\+\_\+from\+\_\+pins\+\_\+t {\bfseries out\+\_\+port} = hwlib\+::port\+\_\+oc\+\_\+from( out0, out1, out2, out3 )
+\item 
+\mbox{\Hypertarget{class_keypadclass_a205763b78e3137905e3b472c53df08ad}\label{class_keypadclass_a205763b78e3137905e3b472c53df08ad}} 
+hwlib\+::port\+\_\+in\+\_\+from\+\_\+pins\+\_\+t {\bfseries in\+\_\+port} = hwlib\+::port\+\_\+in\+\_\+from( in0, in1, in2, in3 )
+\item 
+\mbox{\Hypertarget{class_keypadclass_a5aed6e00ce1a12d24e25de8274c88d4d}\label{class_keypadclass_a5aed6e00ce1a12d24e25de8274c88d4d}} 
+hwlib\+::matrix\+\_\+of\+\_\+switches {\bfseries matrix} = hwlib\+::matrix\+\_\+of\+\_\+switches( out\+\_\+port, in\+\_\+port )
+\item 
+\mbox{\Hypertarget{class_keypadclass_a7ac829ce4de7b814ea5eff36e4a0bcf8}\label{class_keypadclass_a7ac829ce4de7b814ea5eff36e4a0bcf8}} 
+const char $\ast$ {\bfseries message} = \char`\"{}123A456\+B789C$\ast$0\#D\char`\"{}
+\item 
+\mbox{\Hypertarget{class_keypadclass_a0f71145c5c61c0d1dfb59235d23b6d7e}\label{class_keypadclass_a0f71145c5c61c0d1dfb59235d23b6d7e}} 
+hwlib\+::keypad$<$ 16 $>$ {\bfseries keypadmatrix} = hwlib\+::keypad$<$16$>$(matrix, message)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class is used to receive all keypad presses. 
+
+
+
+Definition at line 17 of file keypadclass.\+hpp.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_keypadclass_abfb39ddc0e69d072bb01e835469b7935}\label{class_keypadclass_abfb39ddc0e69d072bb01e835469b7935}} 
+\index{Keypadclass@{Keypadclass}!Keypadclass@{Keypadclass}}
+\index{Keypadclass@{Keypadclass}!Keypadclass@{Keypadclass}}
+\doxysubsubsection{\texorpdfstring{Keypadclass()}{Keypadclass()}}
+{\footnotesize\ttfamily Keypadclass\+::\+Keypadclass (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct a new \mbox{\hyperlink{class_keypadclass}{Keypadclass}} object. 
+
+
+
+Definition at line 59 of file keypadclass.\+hpp.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_keypadclass_a136c8bac933049abd3023e99450bf3e5}\label{class_keypadclass_a136c8bac933049abd3023e99450bf3e5}} 
+\index{Keypadclass@{Keypadclass}!addListener@{addListener}}
+\index{addListener@{addListener}!Keypadclass@{Keypadclass}}
+\doxysubsubsection{\texorpdfstring{addListener()}{addListener()}}
+{\footnotesize\ttfamily void Keypadclass\+::add\+Listener (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_keypad_listener}{Keypad\+Listener}} $\ast$}]{k }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds a listener to the list of listeners. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em k} & Keypadlistener to add to the list of listeners \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 68 of file keypadclass.\+hpp.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+opdracht/headers/\mbox{\hyperlink{keypadclass_8hpp}{keypadclass.\+hpp}}\end{DoxyCompactItemize}

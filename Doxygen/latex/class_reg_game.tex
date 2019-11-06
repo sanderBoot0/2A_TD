@@ -1,0 +1,115 @@
+\hypertarget{class_reg_game}{}\doxysection{Reg\+Game Class Reference}
+\label{class_reg_game}\index{RegGame@{RegGame}}
+
+
+This class registers the game\+\_\+paramereters trough the keyboard input so that the Run\+Game class has the neccesary data to start the game.  
+
+
+
+
+{\ttfamily \#include $<$reg\+\_\+game.\+hpp$>$}
+
+Inheritance diagram for Reg\+Game\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_reg_game}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_reg_game_adb1b562bbc76c8cf7f99a68f34fd2185}{Reg\+Game}} (\mbox{\hyperlink{class_game_rules}{Game\+Rules}} \&g, \mbox{\hyperlink{class_display_controller}{Display\+Controller}} \&display)
+\begin{DoxyCompactList}\small\item\em Constructor which initialises the objects and sets the taskpriority to 9. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_reg_game_abe6063d9a7538021d5bac059cfabc48b}{write}} (const char k) override
+\begin{DoxyCompactList}\small\item\em writes a char value to the keypadchannel \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_reg_game_a44e88da5f4a77e3aaa3f9bd045f66d3d}{write}} (uint16\+\_\+t msg) override
+\begin{DoxyCompactList}\small\item\em Writes a 16 bit value to the messagechannel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class registers the game\+\_\+paramereters trough the keyboard input so that the Run\+Game class has the neccesary data to start the game. 
+
+
+
+Definition at line 23 of file reg\+\_\+game.\+hpp.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_reg_game_adb1b562bbc76c8cf7f99a68f34fd2185}\label{class_reg_game_adb1b562bbc76c8cf7f99a68f34fd2185}} 
+\index{RegGame@{RegGame}!RegGame@{RegGame}}
+\index{RegGame@{RegGame}!RegGame@{RegGame}}
+\doxysubsubsection{\texorpdfstring{RegGame()}{RegGame()}}
+{\footnotesize\ttfamily Reg\+Game\+::\+Reg\+Game (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_game_rules}{Game\+Rules}} \&}]{g,  }\item[{\mbox{\hyperlink{class_display_controller}{Display\+Controller}} \&}]{display }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor which initialises the objects and sets the taskpriority to 9. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em g} & Gamerules class you want to set the values \\
+\hline
+{\em display} & The display ~\newline
+ \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 49 of file reg\+\_\+game.\+hpp.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_reg_game_abe6063d9a7538021d5bac059cfabc48b}\label{class_reg_game_abe6063d9a7538021d5bac059cfabc48b}} 
+\index{RegGame@{RegGame}!write@{write}}
+\index{write@{write}!RegGame@{RegGame}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Reg\+Game\+::write (\begin{DoxyParamCaption}\item[{const char}]{k }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+writes a char value to the keypadchannel 
+
+
+\begin{DoxyParams}{Parameters}
+{\em k} & given char \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_keypad_listener_a05a997e28cbf049ae577e477f335cb0b}{Keypad\+Listener}}.
+
+
+
+Definition at line 61 of file reg\+\_\+game.\+hpp.
+
+\mbox{\Hypertarget{class_reg_game_a44e88da5f4a77e3aaa3f9bd045f66d3d}\label{class_reg_game_a44e88da5f4a77e3aaa3f9bd045f66d3d}} 
+\index{RegGame@{RegGame}!write@{write}}
+\index{write@{write}!RegGame@{RegGame}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Reg\+Game\+::write (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{msg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Writes a 16 bit value to the messagechannel. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & 16 bit message you want to send \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_msg_listener_a074f77a85399910c6ed1bbc4af9cb9c7}{Msg\+Listener}}.
+
+
+
+Definition at line 70 of file reg\+\_\+game.\+hpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+opdracht/headers/\mbox{\hyperlink{reg__game_8hpp}{reg\+\_\+game.\+hpp}}\item 
+opdracht/source/\mbox{\hyperlink{reg__game_8cpp}{reg\+\_\+game.\+cpp}}\end{DoxyCompactItemize}

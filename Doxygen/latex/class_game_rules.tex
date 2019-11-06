@@ -1,0 +1,239 @@
+\hypertarget{class_game_rules}{}\doxysection{Game\+Rules Class Reference}
+\label{class_game_rules}\index{GameRules@{GameRules}}
+
+
+Class that stores values of the player and the game itself.  
+
+
+
+
+{\ttfamily \#include $<$gamerules.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_game_rules_a6a1920a16533c8c94788a5f57c8b862a}{get\+Player\+Number}} ()
+\begin{DoxyCompactList}\small\item\em Get the Player Number value. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_game_rules_af8856d52d4864cb2b1eb05e20758edee}{get\+Firepower}} ()
+\begin{DoxyCompactList}\small\item\em Get the Firepower value. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_game_rules_ae9cb37d61a4e9b9d401688fe9a615a59}{get\+Start\+Signal}} ()
+\begin{DoxyCompactList}\small\item\em Get the Start Signal value. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_game_rules_a51d275fed85166ef1cebd43ea6b1724c}{get\+Finished\+Signal}} ()
+\begin{DoxyCompactList}\small\item\em Get the Finished Signal value. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_game_rules_a1f2f1b69cf4fbaa8ecddc83e3b71f20e}{get\+Game\+Time}} ()
+\begin{DoxyCompactList}\small\item\em Get the Game Time value. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_rules_a9f873fa74b1affd50e64e803f9279c9f}{set\+Player\+Number}} (int p)
+\begin{DoxyCompactList}\small\item\em Set the Player Number value. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_rules_a6d5dc522790d41d258395f964a567489}{set\+Fire\+Power}} (int f)
+\begin{DoxyCompactList}\small\item\em Set the Fire Power value. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_rules_a024eca6d24b66f1facd762bf9bc3ba08}{set\+Start\+Signal}} ()
+\begin{DoxyCompactList}\small\item\em Set the Start Signal value. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_rules_a65e12cf4e32a040820831abc5192a6ed}{set\+Finished\+Signal}} ()
+\begin{DoxyCompactList}\small\item\em Set the Finished Signal value. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_game_rules_a9c035ec9e6ed800bb0969cee7d4d0680}{set\+Game\+Time}} (int g)
+\begin{DoxyCompactList}\small\item\em Set the Game Time value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_game_rules_af737002fb348c1c751137526cb8f20ab}\label{class_game_rules_af737002fb348c1c751137526cb8f20ab}} 
+int {\bfseries playernumber}
+\item 
+\mbox{\Hypertarget{class_game_rules_ab484f029e72a83fdbdeacf325b34e7f1}\label{class_game_rules_ab484f029e72a83fdbdeacf325b34e7f1}} 
+int {\bfseries firepower}
+\item 
+\mbox{\Hypertarget{class_game_rules_a54548db1866b65cffe6ddd35cd655feb}\label{class_game_rules_a54548db1866b65cffe6ddd35cd655feb}} 
+bool {\bfseries startsignal} = false
+\item 
+\mbox{\Hypertarget{class_game_rules_a939b8973902fd0a8d68952b1a84ffa76}\label{class_game_rules_a939b8973902fd0a8d68952b1a84ffa76}} 
+bool {\bfseries game\+Finished} = false
+\item 
+\mbox{\Hypertarget{class_game_rules_a2ccfc4a04b8c2601887ccc1efd21a4db}\label{class_game_rules_a2ccfc4a04b8c2601887ccc1efd21a4db}} 
+int {\bfseries gametime}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class that stores values of the player and the game itself. 
+
+
+
+Definition at line 16 of file gamerules.\+hpp.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_game_rules_a51d275fed85166ef1cebd43ea6b1724c}\label{class_game_rules_a51d275fed85166ef1cebd43ea6b1724c}} 
+\index{GameRules@{GameRules}!getFinishedSignal@{getFinishedSignal}}
+\index{getFinishedSignal@{getFinishedSignal}!GameRules@{GameRules}}
+\doxysubsubsection{\texorpdfstring{getFinishedSignal()}{getFinishedSignal()}}
+{\footnotesize\ttfamily bool Game\+Rules\+::get\+Finished\+Signal (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the Finished Signal value. 
+
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
+
+
+Definition at line 59 of file gamerules.\+hpp.
+
+\mbox{\Hypertarget{class_game_rules_af8856d52d4864cb2b1eb05e20758edee}\label{class_game_rules_af8856d52d4864cb2b1eb05e20758edee}} 
+\index{GameRules@{GameRules}!getFirepower@{getFirepower}}
+\index{getFirepower@{getFirepower}!GameRules@{GameRules}}
+\doxysubsubsection{\texorpdfstring{getFirepower()}{getFirepower()}}
+{\footnotesize\ttfamily int Game\+Rules\+::get\+Firepower (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the Firepower value. 
+
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+
+
+Definition at line 41 of file gamerules.\+hpp.
+
+\mbox{\Hypertarget{class_game_rules_a1f2f1b69cf4fbaa8ecddc83e3b71f20e}\label{class_game_rules_a1f2f1b69cf4fbaa8ecddc83e3b71f20e}} 
+\index{GameRules@{GameRules}!getGameTime@{getGameTime}}
+\index{getGameTime@{getGameTime}!GameRules@{GameRules}}
+\doxysubsubsection{\texorpdfstring{getGameTime()}{getGameTime()}}
+{\footnotesize\ttfamily int Game\+Rules\+::get\+Game\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the Game Time value. 
+
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+
+
+Definition at line 68 of file gamerules.\+hpp.
+
+\mbox{\Hypertarget{class_game_rules_a6a1920a16533c8c94788a5f57c8b862a}\label{class_game_rules_a6a1920a16533c8c94788a5f57c8b862a}} 
+\index{GameRules@{GameRules}!getPlayerNumber@{getPlayerNumber}}
+\index{getPlayerNumber@{getPlayerNumber}!GameRules@{GameRules}}
+\doxysubsubsection{\texorpdfstring{getPlayerNumber()}{getPlayerNumber()}}
+{\footnotesize\ttfamily int Game\+Rules\+::get\+Player\+Number (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the Player Number value. 
+
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+
+
+Definition at line 32 of file gamerules.\+hpp.
+
+\mbox{\Hypertarget{class_game_rules_ae9cb37d61a4e9b9d401688fe9a615a59}\label{class_game_rules_ae9cb37d61a4e9b9d401688fe9a615a59}} 
+\index{GameRules@{GameRules}!getStartSignal@{getStartSignal}}
+\index{getStartSignal@{getStartSignal}!GameRules@{GameRules}}
+\doxysubsubsection{\texorpdfstring{getStartSignal()}{getStartSignal()}}
+{\footnotesize\ttfamily bool Game\+Rules\+::get\+Start\+Signal (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the Start Signal value. 
+
+\begin{DoxyReturn}{Returns}
+bool 
+\end{DoxyReturn}
+
+
+Definition at line 50 of file gamerules.\+hpp.
+
+\mbox{\Hypertarget{class_game_rules_a65e12cf4e32a040820831abc5192a6ed}\label{class_game_rules_a65e12cf4e32a040820831abc5192a6ed}} 
+\index{GameRules@{GameRules}!setFinishedSignal@{setFinishedSignal}}
+\index{setFinishedSignal@{setFinishedSignal}!GameRules@{GameRules}}
+\doxysubsubsection{\texorpdfstring{setFinishedSignal()}{setFinishedSignal()}}
+{\footnotesize\ttfamily void Game\+Rules\+::set\+Finished\+Signal (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the Finished Signal value. 
+
+
+
+Definition at line 102 of file gamerules.\+hpp.
+
+\mbox{\Hypertarget{class_game_rules_a6d5dc522790d41d258395f964a567489}\label{class_game_rules_a6d5dc522790d41d258395f964a567489}} 
+\index{GameRules@{GameRules}!setFirePower@{setFirePower}}
+\index{setFirePower@{setFirePower}!GameRules@{GameRules}}
+\doxysubsubsection{\texorpdfstring{setFirePower()}{setFirePower()}}
+{\footnotesize\ttfamily void Game\+Rules\+::set\+Fire\+Power (\begin{DoxyParamCaption}\item[{int}]{f }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the Fire Power value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em f} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 86 of file gamerules.\+hpp.
+
+\mbox{\Hypertarget{class_game_rules_a9c035ec9e6ed800bb0969cee7d4d0680}\label{class_game_rules_a9c035ec9e6ed800bb0969cee7d4d0680}} 
+\index{GameRules@{GameRules}!setGameTime@{setGameTime}}
+\index{setGameTime@{setGameTime}!GameRules@{GameRules}}
+\doxysubsubsection{\texorpdfstring{setGameTime()}{setGameTime()}}
+{\footnotesize\ttfamily void Game\+Rules\+::set\+Game\+Time (\begin{DoxyParamCaption}\item[{int}]{g }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the Game Time value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em g} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 111 of file gamerules.\+hpp.
+
+\mbox{\Hypertarget{class_game_rules_a9f873fa74b1affd50e64e803f9279c9f}\label{class_game_rules_a9f873fa74b1affd50e64e803f9279c9f}} 
+\index{GameRules@{GameRules}!setPlayerNumber@{setPlayerNumber}}
+\index{setPlayerNumber@{setPlayerNumber}!GameRules@{GameRules}}
+\doxysubsubsection{\texorpdfstring{setPlayerNumber()}{setPlayerNumber()}}
+{\footnotesize\ttfamily void Game\+Rules\+::set\+Player\+Number (\begin{DoxyParamCaption}\item[{int}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the Player Number value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em p} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 77 of file gamerules.\+hpp.
+
+\mbox{\Hypertarget{class_game_rules_a024eca6d24b66f1facd762bf9bc3ba08}\label{class_game_rules_a024eca6d24b66f1facd762bf9bc3ba08}} 
+\index{GameRules@{GameRules}!setStartSignal@{setStartSignal}}
+\index{setStartSignal@{setStartSignal}!GameRules@{GameRules}}
+\doxysubsubsection{\texorpdfstring{setStartSignal()}{setStartSignal()}}
+{\footnotesize\ttfamily void Game\+Rules\+::set\+Start\+Signal (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the Start Signal value. 
+
+
+
+Definition at line 94 of file gamerules.\+hpp.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+opdracht/headers/\mbox{\hyperlink{gamerules_8hpp}{gamerules.\+hpp}}\end{DoxyCompactItemize}

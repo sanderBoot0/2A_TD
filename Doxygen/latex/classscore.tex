@@ -1,0 +1,97 @@
+\hypertarget{classscore}{}\doxysection{score Class Reference}
+\label{classscore}\index{score@{score}}
+
+
+this class contains the score and the hits that the player took during the game  
+
+
+
+
+{\ttfamily \#include $<$score.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classscore_a1556ae2741d225c184f5869ccf8082b8}{get\+Score}} ()
+\begin{DoxyCompactList}\small\item\em Get the Score object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classscore_a1ef99de4c95975a13697647134c43713}{add\+Hit}} (uint8\+\_\+t player\+ID, uint8\+\_\+t damage)
+\begin{DoxyCompactList}\small\item\em this functions adds the enemy player\+ID and the dmg you took to the score\+\_\+hits\mbox{[}\mbox{]} array \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structhits}{hits}} \mbox{\hyperlink{classscore_a2327aa99cc0e9a2352e8f0bb61e5f8d2}{get\+Hit}} (int index)
+\begin{DoxyCompactList}\small\item\em Get the Hit object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+this class contains the score and the hits that the player took during the game 
+
+
+
+Definition at line 22 of file score.\+hpp.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classscore_a1ef99de4c95975a13697647134c43713}\label{classscore_a1ef99de4c95975a13697647134c43713}} 
+\index{score@{score}!addHit@{addHit}}
+\index{addHit@{addHit}!score@{score}}
+\doxysubsubsection{\texorpdfstring{addHit()}{addHit()}}
+{\footnotesize\ttfamily void score\+::add\+Hit (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{player\+ID,  }\item[{uint8\+\_\+t}]{damage }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+this functions adds the enemy player\+ID and the dmg you took to the score\+\_\+hits\mbox{[}\mbox{]} array 
+
+
+\begin{DoxyParams}{Parameters}
+{\em player\+ID} & \\
+\hline
+{\em damage} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 44 of file score.\+hpp.
+
+\mbox{\Hypertarget{classscore_a2327aa99cc0e9a2352e8f0bb61e5f8d2}\label{classscore_a2327aa99cc0e9a2352e8f0bb61e5f8d2}} 
+\index{score@{score}!getHit@{getHit}}
+\index{getHit@{getHit}!score@{score}}
+\doxysubsubsection{\texorpdfstring{getHit()}{getHit()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structhits}{hits}} score\+::get\+Hit (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the Hit object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+hits 
+\end{DoxyReturn}
+
+
+Definition at line 58 of file score.\+hpp.
+
+\mbox{\Hypertarget{classscore_a1556ae2741d225c184f5869ccf8082b8}\label{classscore_a1556ae2741d225c184f5869ccf8082b8}} 
+\index{score@{score}!getScore@{getScore}}
+\index{getScore@{getScore}!score@{score}}
+\doxysubsubsection{\texorpdfstring{getScore()}{getScore()}}
+{\footnotesize\ttfamily int score\+::get\+Score (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the Score object. 
+
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+
+
+Definition at line 35 of file score.\+hpp.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+opdracht/headers/\mbox{\hyperlink{score_8hpp}{score.\+hpp}}\end{DoxyCompactItemize}
